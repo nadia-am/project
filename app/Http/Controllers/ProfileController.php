@@ -23,14 +23,9 @@ class ProfileController extends Controller
 
     public function manageTwoFactorPost(manageTwoFactorPostRequest $request)
     {
-        if ($request->type == 'sms'){
+        if ($this->isRequestTypeSms($request)){
             if ($request->phone !== auth()->user()->phone_number){
-                $code = ActiveCode::generateCode($request->user());
-                $request->session()->flash('phone',$request->phone);
-                //TODO 1. Send code to user new phone
-                $request->user()->notify(new sendEmailInLogInNotification($code));
-                Log::info('Active code :' . $code );
-                return redirect(route('phone.verify'));
+                return $this->createCodeAndSendSms($request);
             }else{
                 $request->user()->update([
                     'two_factor_auth'=>'sms',
@@ -38,7 +33,7 @@ class ProfileController extends Controller
             }
         }
 
-        if ($request->type == 'off'){
+        if ($this->isRequestTypeOff($request)){
             $request->user()->update([
                 'two_factor_auth'=>'off',
             ]);
@@ -69,5 +64,37 @@ class ProfileController extends Controller
         }
 
         return redirect(route('profile.2fa'));
+    }
+
+    /**
+     * @param manageTwoFactorPostRequest $request
+     * @return bool
+     */
+    public function isRequestTypeSms(manageTwoFactorPostRequest $request)
+    {
+        return $request->type == 'sms';
+    }
+
+    /**
+     * @param manageTwoFactorPostRequest $request
+     * @return bool
+     */
+    public function isRequestTypeOff(manageTwoFactorPostRequest $request)
+    {
+        return $request->type == 'off';
+    }
+
+    /**
+     * @param manageTwoFactorPostRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function createCodeAndSendSms(manageTwoFactorPostRequest $request)
+    {
+        $code = ActiveCode::generateCode($request->user());
+        $request->session()->flash('phone', $request->phone);
+        //TODO 1. Send code to user new phone
+        $request->user()->notify(new sendEmailInLogInNotification($code));
+        Log::info('Active code :' . $code);
+        return redirect(route('phone.verify'));
     }
 }

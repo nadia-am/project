@@ -60,4 +60,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->two_factor_auth == 'sms';
     }
     //endregion
+
+    public function hasSmsEnabled()
+    {
+        return $this->two_factor_auth == 'sms';
+    }
 }

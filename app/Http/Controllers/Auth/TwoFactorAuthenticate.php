@@ -13,19 +13,21 @@ trait TwoFactorAuthenticate
     public function loggedIn(Request $request, $user)
     {
         if ($user->has2factorAuth()){
-            auth()->logout();
-            $code = ActiveCode::generateCode($user);
-            $request->session()->flash('auth',[
-                'user_id'=>$user->id,
-                'using_sms'=> true,
-                'remember'=>$request->has('remember'),
-            ]);
-            //TODO send sms
-            $user->notify(new sendEmailInLogInNotification($code));
-            return redirect(route('2fa.token'));
+            $this->goToTokenEntry($request, $user);
         }
-
         return false;
+    }
+    protected function goToTokenEntry($request, $user){
+        auth()->logout();
+        $code = ActiveCode::generateCode($user);
+        $request->session()->flash('auth',[
+            'user_id'=>$user->id,
+            'using_sms'=> true,
+            'remember'=>$request->has('remember'),
+        ]);
+        //TODO send sms
+        $user->notify(new sendEmailInLogInNotification($code));
+        return redirect(route('2fa.token'));
     }
 
 }
