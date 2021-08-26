@@ -3,6 +3,7 @@
 namespace App\Http\Requests\profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class manageTwoFactorPostRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class manageTwoFactorPostRequest extends FormRequest
     {
         return [
             'type'=>'required|in:sms,off',
-            'phone'=>'required_unless:type,off|unique:users,phone_number'
+            'phone'=>['required_unless:type,off' , Rule::unique('users','phone_number')->ignore($this->user()->id)]
         ];
     }
 }

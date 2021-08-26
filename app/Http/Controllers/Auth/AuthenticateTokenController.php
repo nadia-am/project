@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActiveCode;
-use http\Client\Curl\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthenticateTokenController extends Controller
@@ -28,7 +28,7 @@ class AuthenticateTokenController extends Controller
         }
         $user = User::findOrFail($request->session()->get('auth.user_id'));
         $status = ActiveCode::verifyCode($request->token , $user );
-        if ($status){
+        if (!$status){
             alert()->error('کد وارد شده صحیح نیست','ورود ناموفق بود');
             return  redirect(route('login'));
         }

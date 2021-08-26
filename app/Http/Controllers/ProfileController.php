@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\profile\getTokenverifyEmailRequest;
 use App\Http\Requests\profile\manageTwoFactorPostRequest;
 use App\Models\ActiveCode;
+use App\Notifications\sendEmailInLogInNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -26,7 +27,8 @@ class ProfileController extends Controller
             if ($request->phone !== auth()->user()->phone_number){
                 $code = ActiveCode::generateCode($request->user());
                 $request->session()->flash('phone',$request->phone);
-                //TODO 1Send code to user new phone
+                //TODO 1. Send code to user new phone
+                $request->user()->notify(new sendEmailInLogInNotification($code));
                 Log::info('Active code :' . $code );
                 return redirect(route('phone.verify'));
             }else{
