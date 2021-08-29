@@ -22,7 +22,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'two_factor_auth',
-        'phone_number'
+        'phone_number',
+        'is_superuser',
+        'is_staff'
     ];
 
     /**
@@ -65,4 +67,21 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->two_factor_auth == 'sms';
     }
+
+    public function isSuperUser()
+    {
+        return $this->is_superuser;
+    }
+
+    public function isStaff()
+    {
+        return $this->is_staff;
+    }
+
+    public function setPasswordAtrribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+
+    }
+
 }
