@@ -20,17 +20,19 @@ class GoogleAuthController extends Controller
         try {
             $google_user = Socialite::driver('google')->user();
             $user = User::where('email' , $google_user->email )->first();
-            if ($user){
-                auth()->loginUsingId($user->id);
-            }
-            else{
-                $created_user = User::create([
+            if (!$user){
+                $user = User::create([
                     'name'=>$google_user->name,
                     'email'=>$google_user->email,
                     'password'=>bcrypt(Str::random(6)),
+                    'two_factor_auth'=>'off',
                 ]);
-                auth()->loginUsingId($created_user->id);
             }
+
+            if (!$user->hasVerifiedEmail()){
+                $user->markEmailAsVerified();
+            }
+            auth()->loginUsingId($user->id);
             return redirect('/');
         }catch (\Exception $e){
             Log::error('Error Login with google : ' . $e);

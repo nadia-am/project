@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="form-group row col-md-8 offset-md-4">
-                            <div class="g-recaptcha @error('g-recaptcha-response') is-invalid @enderror" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                            <x-recaptcha type="@error('g-recaptcha-response') is-invalid @enderror" />
                             @error('g-recaptcha-response')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

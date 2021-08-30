@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:edit-user,user')->only(['edit']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +22,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(20);
+        $users = User::query();
+        if ($key = request('search')){
+            $users = $users->where('email','like', "%{$key}%")
+                ->orWhere('name','like', "%{$key}%")
+                ->orWhere('id','like', "%{$key}%");
+        }
+        if ($key = request('admin')){
+            $users = $users->where('is_superuser','=', 1)
+                ->orWhere('is_staff','=', 1);
+        }
+        $users = $users->latest()->paginate(20);
         return view('admin.users.all' , compact('users'));
     }
 
@@ -58,7 +73,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -79,32 +94,33 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAdminUserRequest $request,User $user)
+    public function update(UpdateAdminUserRequest $request , User $user)
     {
         $user->name = $request->name;
         $user->email = $request->email;
 
         if(!empty($request->password))
         {
-//            $user->password = bcrypt($request->input('password'));
             $user->password = $request->password;
         }
-
         $user->save();
         if ($request->has('confirm_email')){
             $user->markEmailAsVerified();
         }
+        alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.users.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return void
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        alert()->success('حذف با موفقیت انجام گرفت', 'عملیات موفق');
+        return back();
     }
 }

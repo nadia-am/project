@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable ;
 
     /**
      * The attributes that are mass assignable.
@@ -78,10 +78,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->is_staff;
     }
 
-    public function setPasswordAtrribute($value)
+    public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
-
     }
 
 }

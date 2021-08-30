@@ -24,10 +24,9 @@ class UpdateAdminUserRequest extends FormRequest
      */
     public function rules()
     {
-        dd($id = $this->request->get('user'));
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->id)],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->user->id)],
             'password' => 'nullable|string|min:8|confirmed',
         ];
     }

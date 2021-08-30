@@ -11,15 +11,18 @@
                     <h3 class="card-title">کاربران</h3>
 
                     <div class="card-tools d-flex">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+                        <form action="">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="search" class="form-control float-right" placeholder="جستجو">
 
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                         <div class="btn-group-sm mr-2">
                             <a href="{{ route('admin.users.create') }}" class="btn btn-info">ایجاد کاربر جدید</a>
+                            <a href="{{ request()->fullUrlWithQuery(['admin'=>1]) }}" class="btn btn-warning">نمایش کاربران ادمین</a>
                         </div>
                     </div>
                 </div>
@@ -47,9 +50,15 @@
                                     @endif
 
                                 </td>
-                                <td>
-                                    <a href="{{ route('admin.users.edit' , ['user'=>$user->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>
-                                    <a href="#" class="btn btn-sm btn-danger">حذف</a>
+                                <td  class="d-flex">
+                                    @can('edit-user',$user)
+                                        <a href="{{ route('admin.users.edit' , ['user'=>$user->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>
+                                    @endcan
+                                    <form action="{{ route('admin.users.destroy' , ['user'=>$user->id]) }}" method="post" >
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-sm btn-danger mr-1">حذف</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -57,6 +66,9 @@
                         </tbody></table>
                 </div>
                 <!-- /.card-body -->
+                <div class="card-footer d-flex">
+                    {{ $users->links() }}
+                </div>
             </div>
             <!-- /.card -->
         </div>
