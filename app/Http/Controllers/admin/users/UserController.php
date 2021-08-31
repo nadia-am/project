@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\admin\users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\CreateAdminUserRequest;

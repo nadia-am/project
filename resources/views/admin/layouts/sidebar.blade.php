@@ -32,7 +32,7 @@
                     </li>
                     <li class="nav-item has-treeview {{ isActive( [ "admin.users.index" , "admin.users.create"],"menu-open")}}">
                         <a href="#" class="nav-link {{ isActive([ "admin.users.index" , "admin.users.create"],"active")}}">
-                            <i class="nav-icon fa fa-dashboard"></i>
+                            <i class="nav-icon fa fa-user"></i>
                             <p>
                                 کاربران
                                 <i class="right fa fa-angle-left"></i>
@@ -45,12 +45,31 @@
                                     <p>لیست کاربران</p>
                                 </a>
                             </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item has-treeview {{ isActive( [ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit"],"menu-open")}}">
+                        <a href="#" class="nav-link {{ isActive([ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit"],"active")}}">
+                            <i class="nav-icon fa fa-universal-access"></i>
+                            <p>
+                                بخش اجازه دسترسی
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link ">
+                                <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ isActive( "admin.permissions.index","active")}}">
                                     <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>اجازه دسترسی</p>
+                                    <p>لیست دسترسی ها</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.roles.index') }}" class="nav-link {{ isActive( ["admin.roles.index" ,  "admin.roles.create"],"active")}}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>لیست نقش ها</p>
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
 

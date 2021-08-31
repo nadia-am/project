@@ -1,14 +1,14 @@
 @component('admin.layouts.content',['title'=>'لیست کاربران'])
     @slot('breadcrums')
         <li class="breadcrumb-item"><a href="#">خانه</a></li>
-        <li class="breadcrumb-item active">لیست کاربران</li>
+        <li class="breadcrumb-item active">لیست دسترسی ها</li>
     @endslot
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">کاربران</h3>
+                    <h3 class="card-title"> دسترسی ها</h3>
 
                     <div class="card-tools d-flex">
                         <form action="">
@@ -21,8 +21,7 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-2">
-                            <a href="{{ route('admin.users.create') }}" class="btn btn-info">ایجاد کاربر جدید</a>
-                            <a href="{{ request()->fullUrlWithQuery(['admin'=>1]) }}" class="btn btn-warning">نمایش کاربران ادمین</a>
+                            <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>
                         </div>
                     </div>
                 </div>
@@ -31,33 +30,19 @@
                     <table class="table table-hover">
                         <tbody>
                         <tr>
-                            <th>آیدی کاربر</th>
-                            <th>نام کاربر</th>
-                            <th>ایمیل کاربر</th>
-                            <th>وضعیت ایمیل</th>
+                            <th>آیدی دسترسی</th>
+                            <th>نام دسترسی</th>
+                            <th>برچسب دسترسی</th>
                             <th>اقدامات</th>
                         </tr>
-                        @foreach($users as $user)
+                        @foreach($permissions as $permission)
                             <tr>
-                                <td>{{ $user->id }}</td>
-                                <td> {{ $user->name }} </td>
-                                <td> {{ $user->email }}</td>
-                                <td>
-                                    @if($user->email_verified_at)
-                                        <span class="badge badge-success">تایید شده</span>
-                                    @else
-                                        <span class="badge badge-danger">تایید نشده</span>
-                                    @endif
-
-                                </td>
+                                <td>{{ $permission->id }}</td>
+                                <td> {{ $permission->name }} </td>
+                                <td> {{ $permission->label }}</td>
                                 <td  class="d-flex">
-                                    @if($user->isSuperUser())
-                                        <a href="{{ route('admin.users.permissions',$user->id) }}" class="btn btn-sm btn-info">دسترسی ها</a>
-                                    @endif
-{{--                                    @can('custom-edit-user',$user)--}}
-                                        <a href="{{ route('admin.users.edit' , ['user'=>$user->id]) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
-{{--                                    @endcan--}}
-                                    <form action="{{ route('admin.users.destroy' , ['user'=>$user->id]) }}" method="post" >
+                                    <a href="{{ route('admin.permissions.edit' , ['permission'=>$permission->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>
+                                    <form action="{{ route('admin.permissions.destroy' , ['permission'=>$permission->id]) }}" method="post" >
                                         @method('delete')
                                         @csrf
                                         <button class="btn btn-sm btn-danger mr-1">حذف</button>
@@ -70,7 +55,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer d-flex">
-                    {{ $users->links() }}
+                    {{ $permissions->links() }}
                 </div>
             </div>
             <!-- /.card -->
