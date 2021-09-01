@@ -1,15 +1,17 @@
 <x-admin.content >
-    <x-slot name="title">لیست دسترسی ها</x-slot>
+    <x-slot name="title">
+        لیست محصولات
+    </x-slot>
     <x-slot name="breadcrums">
         <li class="breadcrumb-item"><a href="#">خانه</a></li>
-        <li class="breadcrumb-item active">لیست دسترسی ها</li>
+        <li class="breadcrumb-item active">لیست محصولات</li>
     </x-slot>
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> دسترسی ها</h3>
+                    <h3 class="card-title">محصولات</h3>
 
                     <div class="card-tools d-flex">
                         <form action="">
@@ -22,9 +24,10 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-2">
-                            @can('create-permissions')
-                                <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>
+                            @can('create-product')
+                                <a href="{{ route('admin.products.create') }}" class="btn btn-info">ایجاد محصول جدید</a>
                             @endcan
+
                         </div>
                     </div>
                 </div>
@@ -33,22 +36,27 @@
                     <table class="table table-hover">
                         <tbody>
                         <tr>
-                            <th>آیدی دسترسی</th>
-                            <th>نام دسترسی</th>
-                            <th>برچسب دسترسی</th>
+                            <th>آیدی</th>
+                            <th>عنوان</th>
+                            <th>توضیحات</th>
+                            <th>قیمت</th>
+                            <th>موجودی</th>
                             <th>اقدامات</th>
                         </tr>
-                        @foreach($permissions as $permission)
+                        @foreach($products as $product)
                             <tr>
-                                <td>{{ $permission->id }}</td>
-                                <td> {{ $permission->name }} </td>
-                                <td> {{ $permission->label }}</td>
+                                <td>{{ $product->id }}</td>
+                                <td> {{ $product->title }} </td>
+                                <td> {{ $product->description }}</td>
+                                <td> {{ $product->price }} </td>
+                                <td> {{ $product->inventory }} </td>
                                 <td  class="d-flex">
-                                    @can('edit-permissions')
-                                        <a href="{{ route('admin.permissions.edit' , ['permission'=>$permission->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>
+                                    @can('edit-product')
+                                        <a href="{{ route('admin.products.edit' , ['product'=>$product->id]) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
                                     @endcan
-                                    @can('delete-permissions')
-                                        <form action="{{ route('admin.permissions.destroy' , ['permission'=>$permission->id]) }}" method="post" >
+
+                                    @can('delete-product')
+                                        <form action="{{ route('admin.products.destroy' , ['product'=>$product->id]) }}" method="post" >
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-sm btn-danger mr-1">حذف</button>
@@ -58,15 +66,14 @@
                             </tr>
                         @endforeach
 
-                        </tbody>
-                    </table>
+                        </tbody></table>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer d-flex">
-                    {{ $permissions->appends(['search'=>request('search')])->render()  }}
+                    {{ $products->appends(['search'=>request('search')])->render() }}
                 </div>
             </div>
             <!-- /.card -->
         </div>
     </div>
-</x-admin.content>>
+</x-admin.content>

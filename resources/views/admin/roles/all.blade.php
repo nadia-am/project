@@ -65,7 +65,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer d-flex">
-                    {{ $roles->links() }}
+                    {{ $roles->appends(['search'=>request('search')])->render()  }}
                 </div>
             </div>
             <!-- /.card -->

@@ -83,7 +83,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer d-flex">
-                    {{ $users->links() }}
+                    {{ $users->appends(['search'=>request('search')])->render() }}
                 </div>
             </div>
             <!-- /.card -->

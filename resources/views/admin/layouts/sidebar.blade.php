@@ -32,23 +32,43 @@
                     </li>
                     @can('show-user')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.users.index" , "admin.users.create"],"menu-open")}}">
-                        <a href="#" class="nav-link {{ isActive([ "admin.users.index" , "admin.users.create"],"active")}}">
-                            <i class="nav-icon fa fa-user"></i>
-                            <p>
-                                کاربران
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}" class="nav-link {{ isActive( "admin.users.index","active")}}">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>لیست کاربران</p>
-                                </a>
-                            </li>
+                            <a href="#" class="nav-link {{ isActive([ "admin.users.index" , "admin.users.create"],"active")}}">
+                                <i class="nav-icon fa fa-user"></i>
+                                <p>
+                                    کاربران
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.users.index') }}" class="nav-link {{ isActive( "admin.users.index","active")}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>لیست کاربران</p>
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    @endcan
+                    @can('show-product')
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.products.index" , "admin.products.create"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.products.index" , "admin.products.create"],"active")}}">
+                                <i class="nav-icon fa fa-product-hunt"></i>
+                                <p>
+                                    محصولات
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.products.index') }}" class="nav-link {{ isActive( "admin.products.index","active")}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>لیست محصولات</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
                     @endcan
 
                     @canany(['show-permissions','show-roles'])

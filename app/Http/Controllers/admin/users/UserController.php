@@ -41,7 +41,7 @@ class UserController extends Controller
             $users = $users->where('is_superuser','=', 0)
                 ->orWhere('is_staff','=', 0);
         }
-        $users = $users->latest()->paginate(20);
+        $users = $users->latest()->paginate(10);
         return view('admin.users.all' , compact('users'));
     }
 
@@ -71,6 +71,7 @@ class UserController extends Controller
         if ($request->has('confirm_email')){
             $user->markEmailAsVerified();
         }
+        alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.users.index'));
     }
 

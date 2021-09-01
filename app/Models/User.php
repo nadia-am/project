@@ -56,6 +56,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Permission::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     //region Methods
     public function hasTwoFactor($key)
     {
