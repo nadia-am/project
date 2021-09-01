@@ -1,9 +1,12 @@
-@component('admin.layouts.content',['title'=>'ویرایش کاربر '])
-    @slot('breadcrums')
+<x-admin.content >
+    <x-slot name="title">
+        ویرایش کاربر
+    </x-slot>
+    <x-slot name="breadcrums">
         <li class="breadcrumb-item"><a href="#">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">لیست کاربران</a></li>
         <li class="breadcrumb-item active">ویرایش کاربر </li>
-    @endslot
+    </x-slot>
 
     <div class="card ">
         <div class="card-header">
@@ -47,5 +50,4 @@
             <!-- /.card-footer -->
         </form>
     </div>
-
-@endcomponent
+</x-admin.content>

@@ -21,7 +21,9 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-2">
-                            <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>
+                            @can('create-permissions')
+                                <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -41,17 +43,22 @@
                                 <td> {{ $permission->name }} </td>
                                 <td> {{ $permission->label }}</td>
                                 <td  class="d-flex">
-                                    <a href="{{ route('admin.permissions.edit' , ['permission'=>$permission->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>
-                                    <form action="{{ route('admin.permissions.destroy' , ['permission'=>$permission->id]) }}" method="post" >
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-sm btn-danger mr-1">حذف</button>
-                                    </form>
+                                    @can('edit-permissions')
+                                        <a href="{{ route('admin.permissions.edit' , ['permission'=>$permission->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>
+                                    @endcan
+                                    @can('delete-permissions')
+                                        <form action="{{ route('admin.permissions.destroy' , ['permission'=>$permission->id]) }}" method="post" >
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-sm btn-danger mr-1">حذف</button>
+                                        </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach
 
-                        </tbody></table>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer d-flex">

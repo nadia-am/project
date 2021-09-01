@@ -51,31 +51,40 @@
                     </li>
                     @endcan
 
-                    <li class="nav-item has-treeview {{ isActive( [ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit","admin.roles.create"],"menu-open")}}">
-                        <a href="#" class="nav-link {{ isActive([ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit","admin.roles.create"],"active")}}">
-                            <i class="nav-icon fa fa-universal-access"></i>
-                            <p>
-                                بخش اجازه دسترسی
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ isActive( ["admin.permissions.index", "admin.permissions.create"],"active")}}">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>لیست دسترسی ها</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.roles.index') }}" class="nav-link {{ isActive( ["admin.roles.index" ,  "admin.roles.create"],"active")}}">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>لیست نقش ها</p>
-                                </a>
-                            </li>
+                    @canany(['show-permissions','show-roles'])
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit","admin.roles.create"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit","admin.roles.create"],"active")}}">
+                                <i class="nav-icon fa fa-universal-access"></i>
+                                <p>
+                                    بخش اجازه دسترسی
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            @can('show-permissions')
+                                <ul class="nav nav-treeview">
 
-                        </ul>
-                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ isActive( ["admin.permissions.index", "admin.permissions.create"],"active")}}">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>لیست دسترسی ها</p>
+                                        </a>
+                                    </li>
 
+                                </ul>
+                            @endcan
+
+                            @can('show-roles')
+                                <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.roles.index') }}" class="nav-link {{ isActive( ["admin.roles.index" ,  "admin.roles.create"],"active")}}">
+                                                <i class="fa fa-circle-o nav-icon"></i>
+                                                <p>لیست نقش ها</p>
+                                            </a>
+                                        </li>
+                                </ul>
+                            @endcan
+                        </li>
+                    @endcanany
 
                 </ul>
             </nav>

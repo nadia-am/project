@@ -10,6 +10,13 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-roles')->only(['index']);
+        $this->middleware('can:edit-roles')->only(['edit','update']);
+        $this->middleware('can:create-roles')->only(['create','store']);
+        $this->middleware('can:delete-roles')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      *

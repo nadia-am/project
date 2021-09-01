@@ -17,7 +17,7 @@ class CreatePermissionsAndRolesTables extends Migration
             $table->id();
             $table->string('name');
             $table->string('label')->nullable();
-            $table->timestamps();
+//            $table->timestamps();
         });
         Schema::create('permission_user', function (Blueprint $table) {
             $table->foreignId('user_id')
@@ -32,7 +32,7 @@ class CreatePermissionsAndRolesTables extends Migration
             $table->id();
             $table->string('name');
             $table->string('label')->nullable();
-            $table->timestamps();
+//            $table->timestamps();
         });
         Schema::create('permission_role', function (Blueprint $table) {
             $table->foreignId('role_id')

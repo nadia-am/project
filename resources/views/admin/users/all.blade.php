@@ -1,8 +1,11 @@
-@component('admin.layouts.content',['title'=>'لیست کاربران'])
-    @slot('breadcrums')
+<x-admin.content >
+    <x-slot name="title">
+        لیست کاربران
+    </x-slot>
+    <x-slot name="breadcrums">
         <li class="breadcrumb-item"><a href="#">خانه</a></li>
         <li class="breadcrumb-item active">لیست کاربران</li>
-    @endslot
+    </x-slot>>
 
     <div class="row">
         <div class="col-12">
@@ -55,7 +58,7 @@
 
                                 </td>
                                 <td  class="d-flex">
-                                    @if($user->isSuperUser())
+                                    @if(auth()->user()->isSuperUser())
                                         @can('stafff-users-permission')
                                             <a href="{{ route('admin.users.permissions',$user->id) }}" class="btn btn-sm btn-info">دسترسی ها</a>
                                         @endcan
@@ -86,5 +89,4 @@
             <!-- /.card -->
         </div>
     </div>
-
-@endcomponent
+</x-admin.content>
