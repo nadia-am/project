@@ -1,9 +1,12 @@
-@component('admin.layouts.content',['title'=>'ویرایش اجازه دسترسی  '])
-    @slot('breadcrums')
+<x-admin.content >
+    <x-slot name="title">
+        ویرایش نقش
+    </x-slot>
+    <x-slot name="breadcrums">
         <li class="breadcrumb-item"><a href="#">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.roles.index') }}">لیست اجازه دسترسی ها</a></li>
         <li class="breadcrumb-item active">ویرایش اجازه دسترسی  </li>
-    @endslot
+    </x-slot>
 
     <div class="card ">
         <div class="card-header">
@@ -44,4 +47,4 @@
         </form>
     </div>
 
-@endcomponent
+</x-admin.content>

@@ -1,8 +1,11 @@
-@component('admin.layouts.content',['title'=>'لیست کاربران'])
-    @slot('breadcrums')
+<x-admin.content >
+    <x-slot name="title">
+        لیست نقش ها
+    </x-slot>
+    <x-slot name="breadcrums">
         <li class="breadcrumb-item"><a href="#">خانه</a></li>
         <li class="breadcrumb-item active">لیست نقش ها</li>
-    @endslot
+    </x-slot>
 
     <div class="row">
         <div class="col-12">
@@ -68,5 +71,4 @@
             <!-- /.card -->
         </div>
     </div>
-
-@endcomponent
+</x-admin.content>

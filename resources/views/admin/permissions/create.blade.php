@@ -1,9 +1,10 @@
-@component('admin.layouts.content',['title'=>'ایجاد دسترسی جدید'])
-    @slot('breadcrums')
+<x-admin.content >
+    <x-slot name="title">ایجاد دسترسی جدید </x-slot>
+    <x-slot name="breadcrums">
         <li class="breadcrumb-item"><a href="#">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.permissions.index') }}">لیست دسترسی </a></li>
         <li class="breadcrumb-item active">ایجاد دسترسی جدید</li>
-    @endslot
+    </x-slot>
 
     <div class="card ">
         <div class="card-header">
@@ -33,4 +34,4 @@
         </form>
     </div>
 
-@endcomponent
+</x-admin.content>
