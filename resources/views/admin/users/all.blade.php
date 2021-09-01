@@ -21,8 +21,12 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-2">
-                            <a href="{{ route('admin.users.create') }}" class="btn btn-info">ایجاد کاربر جدید</a>
-                            <a href="{{ request()->fullUrlWithQuery(['admin'=>1]) }}" class="btn btn-warning">نمایش کاربران ادمین</a>
+                            @can('create-user')
+                                <a href="{{ route('admin.users.create') }}" class="btn btn-info">ایجاد کاربر جدید</a>
+                            @endcan
+                            @can('show-staff-user')
+                                <a href="{{ request()->fullUrlWithQuery(['admin'=>1]) }}" class="btn btn-warning">نمایش کاربران ادمین</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -52,16 +56,22 @@
                                 </td>
                                 <td  class="d-flex">
                                     @if($user->isSuperUser())
-                                        <a href="{{ route('admin.users.permissions',$user->id) }}" class="btn btn-sm btn-info">دسترسی ها</a>
+                                        @can('stafff-users-permission')
+                                            <a href="{{ route('admin.users.permissions',$user->id) }}" class="btn btn-sm btn-info">دسترسی ها</a>
+                                        @endcan
                                     @endif
-{{--                                    @can('custom-edit-user',$user)--}}
+
+                                    @can('edit-user')
                                         <a href="{{ route('admin.users.edit' , ['user'=>$user->id]) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
-{{--                                    @endcan--}}
-                                    <form action="{{ route('admin.users.destroy' , ['user'=>$user->id]) }}" method="post" >
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-sm btn-danger mr-1">حذف</button>
-                                    </form>
+                                    @endcan
+
+                                    @can('delete-user')
+                                        <form action="{{ route('admin.users.destroy' , ['user'=>$user->id]) }}" method="post" >
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-sm btn-danger mr-1">حذف</button>
+                                        </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

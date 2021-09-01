@@ -30,7 +30,8 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item has-treeview {{ isActive( [ "admin.users.index" , "admin.users.create"],"menu-open")}}">
+                    @can('show-user')
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.users.index" , "admin.users.create"],"menu-open")}}">
                         <a href="#" class="nav-link {{ isActive([ "admin.users.index" , "admin.users.create"],"active")}}">
                             <i class="nav-icon fa fa-user"></i>
                             <p>
@@ -48,8 +49,10 @@
 
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview {{ isActive( [ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit"],"menu-open")}}">
-                        <a href="#" class="nav-link {{ isActive([ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit"],"active")}}">
+                    @endcan
+
+                    <li class="nav-item has-treeview {{ isActive( [ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit","admin.roles.create"],"menu-open")}}">
+                        <a href="#" class="nav-link {{ isActive([ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit","admin.roles.create"],"active")}}">
                             <i class="nav-icon fa fa-universal-access"></i>
                             <p>
                                 بخش اجازه دسترسی
@@ -58,7 +61,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ isActive( "admin.permissions.index","active")}}">
+                                <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ isActive( ["admin.permissions.index", "admin.permissions.create"],"active")}}">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>لیست دسترسی ها</p>
                                 </a>

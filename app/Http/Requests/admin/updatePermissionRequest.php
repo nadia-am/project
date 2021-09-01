@@ -3,6 +3,7 @@
 namespace App\Http\Requests\admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class updatePermissionRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class updatePermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|unique:permissions|max:255',
+            'name'=> ['required','max:255', Rule::unique('permissions', 'name')->ignore($this->name,'name')] ,
             'label'=>'required|max:255'
         ];
     }

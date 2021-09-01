@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\CreateAdminUserRequest;
 use App\Http\Requests\admin\UpdateAdminUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:edit-user,user')->only(['edit']);
+        $this->middleware('can:show-user')->only(['index']);
+        $this->middleware('can:create-user')->only(['create','store']);
+        $this->middleware('can:edit-user')->only(['edit' , 'update']);
+        $this->middleware('can:delete-user')->only(['destroy']);
     }
 
     /**
@@ -28,9 +31,15 @@ class UserController extends Controller
                 ->orWhere('name','like', "%{$key}%")
                 ->orWhere('id','like', "%{$key}%");
         }
-        if ($key = request('admin')){
-            $users = $users->where('is_superuser','=', 1)
-                ->orWhere('is_staff','=', 1);
+
+        if (Gate::allows('show-staff-user')){
+            if ($key = request('admin')){
+                $users = $users->where('is_superuser','=', 1)
+                    ->orWhere('is_staff','=', 1);
+            }
+        }else{
+            $users = $users->where('is_superuser','=', 0)
+                ->orWhere('is_staff','=', 0);
         }
         $users = $users->latest()->paginate(20);
         return view('admin.users.all' , compact('users'));

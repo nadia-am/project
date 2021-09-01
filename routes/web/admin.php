@@ -13,5 +13,5 @@ Route::get('/',function (){
 Route::resource('users', UserController::class );
 Route::resource('permissions', PermissionController::class );
 Route::resource('roles', RoleController::class );
-Route::get('/user/{user}/permissions', [UserPermissionController::class , 'create'] )->name('users.permissions');
-Route::post('/user/{user}/permissions', [UserPermissionController::class , 'store'] )->name('users.permissions.store');
+Route::get('/user/{user}/permissions', [UserPermissionController::class , 'create'] )->name('users.permissions')->middleware('can:stafff-users-permission');
+Route::post('/user/{user}/permissions', [UserPermissionController::class , 'store'] )->name('users.permissions.store')->middleware('can:stafff-users-permission');

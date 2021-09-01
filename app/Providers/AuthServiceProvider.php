@@ -25,8 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Gate::define('custom-edit-user',function ($user , $currentuser){
-            return $user->id == $currentuser->id || $currentuser->is_supperuser == 1;
+        Gate::before(function ($user){
+            if ($user->isSuperUser()) return true;
         });
 
         foreach (Permission::all() as $permission){

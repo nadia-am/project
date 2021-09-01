@@ -38,7 +38,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <button type="submit" class="btn btn-info">ورود</button>
+                <button type="submit" class="btn btn-info">ثبت</button>
                 <a href="{{ route('admin.users.index') }}" class="btn btn-default float-left">لغو</a>
             </div>
             <!-- /.card-footer -->
