@@ -40,7 +40,8 @@
                             <th>عنوان</th>
                             <th>توضیحات</th>
                             <th>قیمت</th>
-                            <th>موجودی</th>
+                            <th>تعداد موجودی</th>
+                            <th>تعداد بازدید</th>
                             <th>اقدامات</th>
                         </tr>
                         @foreach($products as $product)
@@ -50,6 +51,7 @@
                                 <td> {{ $product->description }}</td>
                                 <td> {{ $product->price }} </td>
                                 <td> {{ $product->inventory }} </td>
+                                <td> {{ $product->viewCount }} </td>
                                 <td  class="d-flex">
                                     @can('edit-product')
                                         <a href="{{ route('admin.products.edit' , ['product'=>$product->id]) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
