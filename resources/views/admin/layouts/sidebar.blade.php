@@ -50,6 +50,26 @@
                             </ul>
                         </li>
                     @endcan
+                    @can('show-comment')
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.comments.index" , "admin.comments.create"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.comments.index" , "admin.comments.create"],"active")}}">
+                                <i class="nav-icon fa fa-comment"></i>
+                                <p>
+                                    نظرات
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.comments.index') }}" class="nav-link {{ isActive( "admin.comments.index","active")}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>لیست نظرات</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    @endcan
                     @can('show-product')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.products.index" , "admin.products.create"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.products.index" , "admin.products.create"],"active")}}">

@@ -102,12 +102,12 @@ class ProfileController extends Controller
 
     public function sendComment(SendCommentRequest $request)
     {
-        if ( ! $request->ajax() ){
-            return response()->json([
-                'status'=>'failed',
-                'message'=>'just ajax available'
-            ]);
-        }
+//        if ( ! $request->ajax() ){
+//            return response()->json([
+//                'status'=>'failed',
+//                'message'=>'just ajax available'
+//            ]);
+//        }
         auth()->user()->comments()->create([
             'comment'=>$request->comment,
             'parent_id'=>$request->parent_id,
@@ -116,9 +116,10 @@ class ProfileController extends Controller
         ]);
         //TODO show alert with ajax
         alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
-        return response()->json([
-            'status'=>'success'
-        ]);
+        return back();
+//        return response()->json([
+//            'status'=>'success'
+//        ]);
     }
 
 
