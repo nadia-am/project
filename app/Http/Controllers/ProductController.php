@@ -15,6 +15,7 @@ class ProductController extends Controller
 
     public function single(Product $product)
     {
-        return view('home.product',compact('product'));
+//        $comments = sort_comments($product->comments , 0);
+        return view('home.product',compact(['product' ]));
     }
 }

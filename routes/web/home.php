@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Comment;
 use App\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -12,8 +13,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
+    $product = \App\Models\Product::where('id',2)->first();
+    $comments=  sort_comments($product->comments , 0);
+    foreach ($comments as $comment){
+        print_r($comment['parent_id']);
+        if ($comment['childeren']){
+            print_r('child');
+        }
+        print_r('-------------------------------------');
+    }dd('fff');
     return view('welcome');
 });
+
 
 Auth::routes(['verify'=>true]);
 
@@ -37,3 +48,4 @@ Route::middleware(['auth','verified'])->prefix('profile')->group( function (){
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.list');
 Route::get('/product/{product}', [ProductController::class, 'single'])->name('product.single');
+Route::post('/send/comment', [ProfileController::class, 'sendComment'])->name('send.comment');

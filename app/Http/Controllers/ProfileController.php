@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\comment\SendCommentRequest;
 use App\Http\Requests\profile\getTokenverifyEmailRequest;
 use App\Http\Requests\profile\manageTwoFactorPostRequest;
 use App\Models\ActiveCode;
+use App\Models\Comment;
 use App\Notifications\sendEmailInLogInNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -97,4 +99,27 @@ class ProfileController extends Controller
         Log::info('Active code :' . $code);
         return redirect(route('phone.verify'));
     }
+
+    public function sendComment(SendCommentRequest $request)
+    {
+        if ( ! $request->ajax() ){
+            return response()->json([
+                'status'=>'failed',
+                'message'=>'just ajax available'
+            ]);
+        }
+        auth()->user()->comments()->create([
+            'comment'=>$request->comment,
+            'parent_id'=>$request->parent_id,
+            'commentable_id'=>$request->commentable_id,
+            'commentable_type'=>$request->commentable_type,
+        ]);
+        //TODO show alert with ajax
+        alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+        return response()->json([
+            'status'=>'success'
+        ]);
+    }
+
+
 }

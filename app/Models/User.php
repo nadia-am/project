@@ -46,6 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    //region relations
     public function roles()
     {
         return $this->belongsToMany(Role::class);
@@ -60,6 +61,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Product::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+    //endregion
 
     //region Methods
     public function hasTwoFactor($key)
@@ -76,7 +83,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->two_factor_auth == 'sms';
     }
-    //endregion
 
     public function hasSmsEnabled()
     {
@@ -108,4 +114,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return !! $roles->intersect($this->roles)->count();
     }
+    //endregion
 }
