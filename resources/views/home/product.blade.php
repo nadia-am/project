@@ -46,8 +46,12 @@
         <div class="row ">
             <div class="col-md-12">
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between">
                         {{ $product->title }}
+                        <form action="{{ route('cart.add' ,$product->id) }}" method="post" id="add-to-shoppingcart">
+                            @csrf
+                        </form>
+                        <span onclick="document.getElementById('add-to-shoppingcart').submit()" class="btn btn-info">افزودن به سبد خرید</span>
                     </div>
                     <div class="card-body">
 

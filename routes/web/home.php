@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticateTokenController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -34,3 +35,8 @@ Route::middleware(['auth','verified'])->prefix('profile')->group( function (){
 Route::get('/products', [ProductController::class, 'index'])->name('products.list');
 Route::get('/product/{product}', [ProductController::class, 'single'])->name('product.single');
 Route::post('/send/comment', [ProfileController::class, 'sendComment'])->name('send.comment');
+
+Route::get('/cart', function () {
+    return view('home.cart');
+});
+Route::post('cart/add/{product}',[CartController::class , 'add'])->name('cart.add');
