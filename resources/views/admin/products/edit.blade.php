@@ -35,6 +35,16 @@
                     <label for="inventory" class="col-sm-2 control-label">تعداد موجودی محصول</label>
                     <input type="number" class="form-control" name="inventory" id="inventory" placeholder="تعداد موجودی محصول را وارد کنید" value="{{ old('inventory',$product->inventory) }}">
                 </div>
+                <div class="form-group">
+                    <label for="inventory" class="col-sm-2 control-label">دسته بندی </label>
+                    <select name="categories[]" class="form-control" id="categories" multiple>
+                        @foreach(\App\Models\Category::all() as $cat)
+                            <option value="{{ $cat->id }}" {{ in_array($cat->id , $product->categories->pluck('id')->toArray())  ? 'selected' : ''}} >
+                                {{ $cat->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <!-- /.card-body -->
             <div class="card-footer">

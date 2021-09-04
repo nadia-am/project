@@ -114,7 +114,6 @@ class ProfileController extends Controller
             'commentable_id'=>$request->commentable_id,
             'commentable_type'=>$request->commentable_type,
         ]);
-        //TODO show alert with ajax
         alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
         return back();
 //        return response()->json([

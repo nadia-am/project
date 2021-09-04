@@ -31,8 +31,8 @@
                         </a>
                     </li>
                     @can('show-user')
-                        <li class="nav-item has-treeview {{ isActive( [ "admin.users.index" , "admin.users.create"],"menu-open")}}">
-                            <a href="#" class="nav-link {{ isActive([ "admin.users.index" , "admin.users.create"],"active")}}">
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.users.index" , "admin.users.create", "admin.users.edit"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.users.index" , "admin.users.create", "admin.users.edit"],"active")}}">
                                 <i class="nav-icon fa fa-user"></i>
                                 <p>
                                     کاربران
@@ -50,9 +50,31 @@
                             </ul>
                         </li>
                     @endcan
+
+                    @can('show-product')
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.products.index" , "admin.products.create" , "admin.products.edit"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.products.index" , "admin.products.create", "admin.products.edit"],"active")}}">
+                                <i class="nav-icon fa fa-product-hunt"></i>
+                                <p>
+                                    محصولات
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.products.index') }}" class="nav-link {{ isActive( "admin.products.index","active")}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>لیست محصولات</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    @endcan
+
                     @can('show-comment')
-                        <li class="nav-item has-treeview {{ isActive( [ "admin.comments.index" , "admin.comments.create"],"menu-open")}}">
-                            <a href="#" class="nav-link {{ isActive([ "admin.comments.index" , "admin.comments.create"],"active")}}">
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.comments.index" , "admin.comments.create" , "admin.comments.edit"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.comments.index" , "admin.comments.create","admin.comments.edit"],"active")}}">
                                 <i class="nav-icon fa fa-comment"></i>
                                 <p>
                                     نظرات
@@ -70,20 +92,21 @@
                             </ul>
                         </li>
                     @endcan
-                    @can('show-product')
-                        <li class="nav-item has-treeview {{ isActive( [ "admin.products.index" , "admin.products.create"],"menu-open")}}">
-                            <a href="#" class="nav-link {{ isActive([ "admin.products.index" , "admin.products.create"],"active")}}">
-                                <i class="nav-icon fa fa-product-hunt"></i>
+
+                    @can('show-category')
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.categories.index" , "admin.categories.create","admin.categories.edit"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.categories.index" , "admin.categories.create","admin.categories.edit"],"active")}}">
+                                <i class="nav-icon fa fa-comment"></i>
                                 <p>
-                                    محصولات
+                                    دسته بندی ها
                                     <i class="right fa fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.products.index') }}" class="nav-link {{ isActive( "admin.products.index","active")}}">
+                                    <a href="{{ route('admin.categories.index') }}" class="nav-link {{ isActive( "admin.categories.index","active")}}">
                                         <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>لیست محصولات</p>
+                                        <p>لیست دسته بندی ها</p>
                                     </a>
                                 </li>
 

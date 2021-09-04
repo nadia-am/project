@@ -117,7 +117,7 @@
             <!-- end modal -->
             {{--    show comments        --}}
             <div class="row ">
-                @include('layouts.comments',['comments' => $product->comments()->where('parent_id',0)->get(),'attr'=>'col-md-8' ])
+                @include('layouts.comments',['comments' => $product->comments()->where('parent_id',0)->where('approved',1)->get(),'attr'=>'col-md-8' ])
 
             </div>
         </div>

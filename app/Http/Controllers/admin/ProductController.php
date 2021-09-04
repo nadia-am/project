@@ -45,12 +45,13 @@ class ProductController extends Controller
      */
     public function store(storProductRequest $request)
     {
-        auth()->user()->products()->save(new Product([
+        $product = auth()->user()->products()->save(new Product([
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
             'inventory' => $request->inventory ? $request->inventory : 0
         ]));
+        $product->categories()->sync($request->categories);
         alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.products.index'));
 
@@ -82,6 +83,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'inventory' => $request->inventory ? $request->inventory : 0
         ]);
+        $product->categories()->sync($request->categories);
         alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.products.index'));
     }

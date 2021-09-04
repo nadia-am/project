@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class CommentController extends Controller
 {
@@ -14,7 +15,14 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::paginate(20);
+        $comments = Comment::query();
+        if ($key = \request('search')){
+            $comments = $comments->where('comment','like',"%{$key}%")
+                            ->orWhereHas('user', function ($query) use ($key){
+                                $query->where('name', 'like',"%{$key}%");
+                            });
+        }
+        $comments = $comments->latest()->paginate(20);
         return view('admin.comments.all',compact('comments'));
     }
 
