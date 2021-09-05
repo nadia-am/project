@@ -48,10 +48,18 @@
                 <div class="card text-center">
                     <div class="card-header d-flex justify-content-between">
                         {{ $product->title }}
-                        <form action="{{ route('cart.add' ,$product->id) }}" method="post" id="add-to-shoppingcart">
-                            @csrf
-                        </form>
-                        <span onclick="document.getElementById('add-to-shoppingcart').submit()" class="btn btn-info">افزودن به سبد خرید</span>
+                        @php
+                        $list = \App\Helpers\Cart\Cart::get($product);
+                        $quantity = $list['quantity'];
+                        @endphp
+                        @if($product->inventory < $quantity)
+                            <form action="{{ route('cart.add' ,$product->id) }}" method="post" id="add-to-shoppingcart">
+                                @csrf
+                            </form>
+                            <span onclick="document.getElementById('add-to-shoppingcart').submit()" class="btn btn-info">افزودن به سبد خرید</span>
+                        @else
+                            <span>ناموجود</span>
+                        @endif
                     </div>
                     <div class="card-body">
 

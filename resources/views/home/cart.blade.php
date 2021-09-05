@@ -21,30 +21,34 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach(App\Helpers\Cart\Cart::all() as $cart)
+                            @php
+                                $product = $cart['product'];
+                            @endphp
+                            <tr>
+                                <td class="p-4">
+                                    <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <a href="#" class="d-block text-dark">{{ $product->title }}</a>
 
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark">موبایل هواوی</a>
-                                        <small>
-                                            <span class="text-muted">Size: </span> EU 37 &nbsp;
-                                            <span class="text-muted">Ships from: </span> China
-                                        </small>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">50000 تومان</td>
-                            <td class="align-middle p-4">
-                                <select name="" class="form-control text-center">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">تومان 100000</td>
-                            <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
-                        </tr>
+                                </td>
+                                <td class="text-right font-weight-semibold align-middle p-4">{{ $product->price }} تومان</td>
+                                <td class="align-middle p-4">
+                                    <select name="" class="form-control text-center">
+                                        @for($i=1 ; $i<= $product->inventory ; $i++)
+                                            <option value="{{ $i }}" {{ ($cart['quantity'] ==  $i)? "selected":"" }}>{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </td>
+                                <td class="text-right font-weight-semibold align-middle p-4">
+                                    تومان
+                                    {{ $cart['quantity'] * $product->price }}
+                                </td>
+                                <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
+                            </tr>
+                        @endforeach
 
                         </tbody>
                     </table>
@@ -53,13 +57,15 @@
                 <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
                     <div class="mt-4"></div>
                     <div class="d-flex">
-{{--                        <div class="text-right mt-4 mr-5">--}}
-{{--                            <label class="text-muted font-weight-normal m-0">Discount</label>--}}
-{{--                            <div class="text-large"><strong>$20</strong></div>--}}
-{{--                        </div>--}}
                         <div class="text-right mt-4">
                             <label class="text-muted font-weight-normal m-0">قیمت کل</label>
-                            <div class="text-large"><strong>150000 تومان</strong></div>
+                            @php
+                                $total = \App\Helpers\Cart\Cart::all()->sum(function ($cart) {
+                                                return $cart['product']->price * $cart['quantity'];
+                                            });
+                            @endphp
+
+                            <div class="text-large"><strong>{{ $total }} تومان</strong></div>
                         </div>
                     </div>
                 </div>

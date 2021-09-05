@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 class CartSevice
 {
     protected $cart;
+
     public function __construct()
     {
         $this->cart = session()->get('cart') ?? collect([]);
@@ -24,9 +25,14 @@ class CartSevice
                 'subject_id'=> $obj->id ,
                 'subject_type'=> get_class($obj),
             ]);
+        }elseif (! isset($value['id'])){
+            $value = array_merge($value , [
+                'id'=> Str::random(10),
+            ]);
         }
         $this->cart->put($value['id'] , $value);
         session()->put('cart' , $this->cart);
+
         return $this;
     }
 
@@ -40,13 +46,12 @@ class CartSevice
         return ! is_null($this->cart->firstWhere('id',$key));
     }
 
-    public function get($key)
+    public function get($key , $withModels = true)
     {
-        $item = $key instanceof Model?
+        $item = $key instanceof Model ?
             $this->cart->where('subject_id',$key->id) ->where('subject_type',get_class($key))->first() :
             $this->cart->firstWhere('id',$key);
-        $item = $this->AddModelIfExist($item);
-        return $item;
+        return $withModels? $this->AddModelIfExist($item) : $item;
 
     }
 
@@ -59,6 +64,21 @@ class CartSevice
         return $items;
     }
 
+    public function update($key , $increament)
+    {
+        $this->count($key);
+        if ($key['product']->inventory < $key['quantity']){
+            $item = collect($key);
+            $item = $item->merge([
+                'quantity' => $item['quantity'] + $increament
+            ]);
+            $this->put($item->toArray());
+        }
+        return $this;
+
+    }
+
+
     protected function AddModelIfExist($item)
     {
         if ( isset($item['subject_id']) && isset($item['subject_type']) ){
@@ -70,5 +90,7 @@ class CartSevice
         }
         return $item;
     }
+
+
 
 }

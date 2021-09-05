@@ -6,10 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Comment;
-use App\Models\Permission;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 
@@ -36,7 +33,5 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.lis
 Route::get('/product/{product}', [ProductController::class, 'single'])->name('product.single');
 Route::post('/send/comment', [ProfileController::class, 'sendComment'])->name('send.comment');
 
-Route::get('/cart', function () {
-    return view('home.cart');
-});
+Route::get('/cart', [CartController::class , 'shoppingCart'])->name('shopping.cart');
 Route::post('cart/add/{product}',[CartController::class , 'add'])->name('cart.add');

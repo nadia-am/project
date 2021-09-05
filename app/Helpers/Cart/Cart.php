@@ -8,14 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
 use phpDocumentor\Reflection\Types\Boolean;
 use phpDocumentor\Reflection\Types\Collection;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Class Cart
  * @package App\Helpers\Cart
  * @method static Cart put(array $value, $obj = null)
  * @method  static Boolean has( $key)
- * @method  static array get($key)
+ * @method  static array get($key, Boolean $withModels)
  * @method  static Collection all()
+ * @method  static integer count(array $key)
+ * @method  static Cart update(array $key , Integer $increament)
  */
 class Cart extends Facade
 {
