@@ -1,7 +1,7 @@
 @foreach( $comments  as $comment)
     <div class="{{ $attr }} mt-2">
         <div class="card ">
-            <div class="card-header ">
+            <div class="card-header d-flex justify-content-between">
                 <div class="commenter d-flex">
                     <span> {{ $comment->user->name }}</span>
                     &nbsp; - &nbsp;
@@ -17,7 +17,7 @@
             <div class="card-body">
                 {{ $comment->comment }}
                 @if($comment->childeren)
-                    @include('layouts.comments',['comments' => $comment->childeren , 'attr'=>'col-md-12' ])
+                    @include('layouts.comments',['comments' => $comment->childeren()->where('approved',1)->get() , 'attr'=>'col-md-12' ])
                 @endif
             </div>
 

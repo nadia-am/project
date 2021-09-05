@@ -18,7 +18,8 @@ use phpDocumentor\Reflection\Types\Integer;
  * @method  static array get($key, Boolean $withModels)
  * @method  static Collection all()
  * @method  static integer count(array $key)
- * @method  static Cart update(array $key , Integer $increament)
+ * @method  static Cart update( $key ,  $option)
+ * @method  static Cart delete( $key )
  */
 class Cart extends Facade
 {

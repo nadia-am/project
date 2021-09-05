@@ -2,31 +2,29 @@
 
 @section('script')
     <script>
-        // document.querySelector('#sendCommentForm').addEventListener('submit', function ($event) {
-        //     $event.preventDefault();
-        //     let target = $event.target;
-        //     let data = {
-        //         'commentable_id' : target.querySelector('input[name="commentable_id"]').value,
-        //         'commentable_type' : target.querySelector('input[name="commentable_type"]').value,
-        //         'parent_id' : target.querySelector('input[name="parent_id"]').value,
-        //         'comment' : target.querySelector('textarea[name="comment"]').value,
-        //     }
-        //     let token = document.head.querySelector('meta[name="csrf-token"]').content
-        //     $.ajax({
-        //         url : '/send/comment',
-        //         type : 'post',
-        //         data : JSON.stringify(data),
-        //         headers: {
-        //             'X-CSRF-TOKEN':token,
-        //             'Content-Type':'application/json'
-        //         },
-        //         success : function (response) {
-        //             var button = document.getElementById("closeComment");
-        //             button.click();
-        //             console.log(response)
-        //         }
-        //     })
-        // });
+        document.querySelector('#sendCommentForm').addEventListener('submit', function ($event) {
+            $event.preventDefault();
+            let target = $event.target;
+            let data = {
+                'commentable_id' : target.querySelector('input[name="commentable_id"]').value,
+                'commentable_type' : target.querySelector('input[name="commentable_type"]').value,
+                'parent_id' : target.querySelector('input[name="parent_id"]').value,
+                'comment' : target.querySelector('textarea[name="comment"]').value,
+            }
+            let token = document.head.querySelector('meta[name="csrf-token"]').content
+            $.ajax({
+                url : '/send/comment',
+                type : 'post',
+                data : JSON.stringify(data),
+                headers: {
+                    'X-CSRF-TOKEN':token,
+                    'Content-Type':'application/json'
+                },
+                success : function (response) {
+                    location.reload()
+                }
+            })
+        });
 
         $('#sendCommentModal').on('shown.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
@@ -49,10 +47,14 @@
                     <div class="card-header d-flex justify-content-between">
                         {{ $product->title }}
                         @php
-                        $list = \App\Helpers\Cart\Cart::get($product);
-                        $quantity = $list['quantity'];
+                        if (\App\Helpers\Cart\Cart::has($product)){
+                            $list = \App\Helpers\Cart\Cart::get($product);
+                            $quantity = $list['quantity'];
+                        }else{
+                            $quantity = 0;
+                        }
                         @endphp
-                        @if($product->inventory < $quantity)
+                        @if($product->inventory > $quantity)
                             <form action="{{ route('cart.add' ,$product->id) }}" method="post" id="add-to-shoppingcart">
                                 @csrf
                             </form>
@@ -92,7 +94,7 @@
                 </button>
                 <!-- Modal -->
                 <div class="modal fade" id="sendCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <form action="{{ route('send.comment') }}" method="post" id="sendCommentForm">
+                    <form action=" " method="post" id="sendCommentForm">
                         @csrf
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">

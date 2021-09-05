@@ -6,15 +6,19 @@ namespace App\Helpers\Cart;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 
 class CartSevice
 {
     protected $cart;
+    private $name = "my-cart";
 
     public function __construct()
     {
-        $this->cart = session()->get('cart') ?? collect([]);
+//        $this->cart = session()->get($this->name) ?? collect([]);
+        $value = json_decode( Cookie::get($this->name) , true);
+        $this->cart = collect($value) ?? collect([]);
     }
 
     public function put(array $value, $obj = null)
@@ -31,7 +35,8 @@ class CartSevice
             ]);
         }
         $this->cart->put($value['id'] , $value);
-        session()->put('cart' , $this->cart);
+//        session()->put($this->name , $this->cart);
+        Cookie::queue($this->name, $this->cart->toJson(),( 60*24) * 2);
 
         return $this;
     }
@@ -64,20 +69,37 @@ class CartSevice
         return $items;
     }
 
-    public function update($key , $increament)
+    public function update($key , $option)
     {
-        $this->count($key);
-        if ($key['product']->inventory < $key['quantity']){
-            $item = collect($key);
+        $list = Cart::get($key,false);
+        $item = collect($list);
+        if (is_numeric($option)){
             $item = $item->merge([
-                'quantity' => $item['quantity'] + $increament
+                'quantity' => $item['quantity'] + $option
             ]);
-            $this->put($item->toArray());
         }
+        if (is_array($option)){
+            $item = $item->merge($option);
+        }
+        $this->put($item->toArray());
         return $this;
 
     }
 
+    public function delete($key)
+    {
+        if ($this->has($key)){
+            if ($key instanceof Model){
+                $list = $this->get($key);
+                $key = $list['id'];
+            }
+            $this->cart = $this->cart->forget($key);
+//            session()->put('cart' , $this->cart);
+            Cookie::queue($this->name, $this->cart->toJson(),( 60*24) * 2);
+            return true;
+        }
+        return false;
+    }
 
     protected function AddModelIfExist($item)
     {

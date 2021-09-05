@@ -10,17 +10,15 @@ class CartController extends Controller
 {
     public function add(Product $product)
     {
-//        dd(collect(Cart::get($product))->toArray());
         if (Cart::has($product)){
-            $list = Cart::get($product,false);
-            if ($product->inventory < $list['quantity']){
-                Cart::update($list , 1);
+            $list = Cart::get($product);
+            if ($product->inventory > $list['quantity']){
+                Cart::update($product , 1);
             }
         }else{
             Cart::put(
                 [
                     'quantity'=>1,
-                    'price'=> $product->price
                 ],
                 $product
             );
@@ -31,7 +29,32 @@ class CartController extends Controller
 
     public function shoppingCart()
     {
-//        return Cart::all();
         return view('home.cart');
+    }
+
+    public function quantityUpdate(Request $request)
+    {
+        $data = $request->validate([
+            'id'=>'required',
+            'quantity'=>'required',
+        ]);
+        if (Cart::has($data['id'])){
+            Cart::update($data['id'] , [
+                'quantity' => $data['quantity']
+            ]);
+            return response([
+                'status'=>'success'
+            ]);
+        }
+        return response([
+            'status'=>'error',
+            'message'=>'id of product not found'
+        ],400);
+    }
+
+    public function deleteCart(Product $product)
+    {
+        Cart::delete($product);
+        return back();
     }
 }

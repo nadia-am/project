@@ -1,5 +1,30 @@
 @extends('layouts.app')
+@section('script')
+    <script>
+        function changeQuantity(event, id , cartName = null) {
+            $.ajaxSetup({
+                headers : {
+                    'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type' : 'application/json'
+                }
+            })
+            $.ajax({
+                type : 'POST',
+                url : '/cart/quantity/change',
+                data : JSON.stringify({
+                    id : id ,
+                    quantity : event.target.value,
+                    // cart : cartName,
+                    _method : 'patch'
+                }),
+                success : function(res) {
+                    location.reload();
+                }
+            });
+        }
 
+    </script>
+@endsection
 @section('content')
     <div class="container px-3 my-5 clearfix">
         <!-- Shopping cart table -->
@@ -29,14 +54,13 @@
                                 <td class="p-4">
                                     <div class="media align-items-center">
                                         <div class="media-body">
-                                            <a href="#" class="d-block text-dark">{{ $product->title }}</a>
-
+                                            <a href="{{ route('product.single' , $product->id) }}" class="d-block text-dark">{{ $product->title }}</a>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="text-right font-weight-semibold align-middle p-4">{{ $product->price }} تومان</td>
                                 <td class="align-middle p-4">
-                                    <select name="" class="form-control text-center">
+                                    <select onchange="changeQuantity(event, '{{ $cart['id'] }}')" class="form-control text-center">
                                         @for($i=1 ; $i<= $product->inventory ; $i++)
                                             <option value="{{ $i }}" {{ ($cart['quantity'] ==  $i)? "selected":"" }}>{{ $i }}</option>
                                         @endfor
@@ -46,10 +70,15 @@
                                     تومان
                                     {{ $cart['quantity'] * $product->price }}
                                 </td>
-                                <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
+                                <td class="text-center align-middle px-0">
+                                    <form action="{{ route('delete.cart',$product->id ) }}" id="delete-cart-{{ $cart['id'] }}" method="post">
+                                        @method('delete')
+                                        @csrf
+                                    </form>
+                                    <a href="#" onclick="event.preventDefault(); document.getElementById('delete-cart-{{ $cart['id'] }}').submit()" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a>
+                                </td>
                             </tr>
                         @endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -64,14 +93,16 @@
                                                 return $cart['product']->price * $cart['quantity'];
                                             });
                             @endphp
-
                             <div class="text-large"><strong>{{ $total }} تومان</strong></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="float-left">
-                    <button type="button" class="btn btn-lg btn-primary mt-2">پرداخت</button>
+                    <form action="{{ route('order.payment') }}" method="post" id="cart-payment-order">
+                        @csrf
+                    </form>
+                    <button onclick="document.getElementById('cart-payment-order').submit()" type="button" class="btn btn-lg btn-primary mt-2">پرداخت</button>
                 </div>
 
             </div>
