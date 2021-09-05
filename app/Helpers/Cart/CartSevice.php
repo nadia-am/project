@@ -36,7 +36,7 @@ class CartSevice
         }
         $this->cart->put($value['id'] , $value);
 //        session()->put($this->name , $this->cart);
-        Cookie::queue($this->name, $this->cart->toJson(),( 60*24) * 2);
+        $this->saveCookie();
 
         return $this;
     }
@@ -95,10 +95,16 @@ class CartSevice
             }
             $this->cart = $this->cart->forget($key);
 //            session()->put('cart' , $this->cart);
-            Cookie::queue($this->name, $this->cart->toJson(),( 60*24) * 2);
+            $this->saveCookie();
             return true;
         }
         return false;
+    }
+
+    public function flush()
+    {
+        $this->cart = collect([]);
+        $this->saveCookie();
     }
 
     protected function AddModelIfExist($item)
@@ -113,6 +119,10 @@ class CartSevice
         return $item;
     }
 
+    protected function saveCookie()
+    {
+        Cookie::queue($this->name, $this->cart->toJson(),( 60*24) * 2);
+    }
 
 
 }

@@ -29,7 +29,6 @@ Route::middleware(['auth','verified'])->prefix('profile')->group( function (){
     Route::post('/twofactor', [ProfileController::class, 'manageTwoFactorPost'])->name('manage.profile.2fa');
     Route::get('/twofactor/phone', [ProfileController::class, 'getPhoneVerify'])->name('phone.verify');
     Route::post('/twofactor/phone', [ProfileController::class, 'postPhoneVerify'])->name('post.phone.verify');
-    Route::post('/payment', [PaymentController::class, 'payment'])->name('order.payment');
 });
 Route::get('/products', [ProductController::class, 'index'])->name('products.list');
 Route::get('/product/{product}', [ProductController::class, 'single'])->name('product.single');
@@ -39,3 +38,7 @@ Route::get('/cart', [CartController::class , 'shoppingCart'])->name('shopping.ca
 Route::post('cart/add/{product}',[CartController::class , 'add'])->name('cart.add');
 Route::patch('/cart/quantity/change',[CartController::class , 'quantityUpdate'])->name('quantity.update');
 Route::delete('/cart/delete/{product}',[CartController::class , 'deleteCart'])->name('delete.cart');
+Route::middleware('auth')->group( function (){
+    Route::post('/payment', [PaymentController::class, 'payment'])->name('order.payment');
+    Route::get('/payment/callback/{id}', [PaymentController::class, 'callback'])->name('callback.payment');
+});
