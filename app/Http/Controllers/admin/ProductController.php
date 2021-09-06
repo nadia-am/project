@@ -99,6 +99,7 @@ class ProductController extends Controller
             if(File::exists(public_path($product->image))){
                 File::delete(public_path($product->image));
             }
+            /* upload new image */
             $file->move(public_path($image_path) , $image_name);
             $product->image = $image_path . $image_name;
             $product->save();
