@@ -1,6 +1,8 @@
 @extends('admin.master')
 @section('script')
+    <script src="/js/ckeditor/ckeditor.js"></script>
     <script>
+        CKEDITOR.replace( 'description' );
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('button-image').addEventListener('click', (event) => {
                 event.preventDefault();
