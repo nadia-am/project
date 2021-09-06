@@ -9,12 +9,16 @@
                         <ul class="nav nav-pills card-header-pills">
                             <li class="nav-item">
                                 <a class="nav-link
-                                {{ request()->route()->getName() == 'profile'? "active":"" }} " href="{{ route('profile') }}" > index</a>
+                                {{ request()->route()->getName() == 'profile'? "active":"" }} " href="{{ route('profile') }}" > پروفایل</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link
                                  {{  request()->route()->getName() == 'profile.2fa'? "active":"" }}
-                                 " href="{{ route('profile.2fa') }}" >Two Factor Auth</a>
+                                 " href="{{ route('profile.2fa') }}" >احراز هویت دو مرحله ای</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link
+                                {{ request()->route()->getName() == 'profile.orders'? "active":"" }} " href="{{ route('profile.orders') }}" > سفارشات</a>
                             </li>
                         </ul>
                     </div>
