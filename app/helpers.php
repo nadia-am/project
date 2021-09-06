@@ -12,4 +12,13 @@ if (! function_exists('isActive')){
     }
 }
 
+if (! function_exists('isUrl')){
+    function isUrl($routeNmae , $class = 'active'){
+        if (is_array($routeNmae)){
+            return in_array( url()->full() , $routeNmae) ? $class: '';
+        }
+        return url()->full()== $routeNmae? $class: '';
+    }
+}
+
 

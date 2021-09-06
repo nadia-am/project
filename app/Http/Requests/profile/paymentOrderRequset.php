@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\admin;
+namespace App\Http\Requests\profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
-class storProductRequest extends FormRequest
+class paymentOrderRequset extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class storProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('showOrder' , $this->order);
     }
 
     /**
@@ -24,11 +25,7 @@ class storProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|max:255|min:3',
-            'description'=>'required|min:5',
-            'price'=>'required|numeric',
-            'inventory'=>'numeric',
-            'image'=>'nullable|image|max:2024'
+            //
         ];
     }
 }

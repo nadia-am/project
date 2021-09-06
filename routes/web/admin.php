@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
@@ -21,3 +22,5 @@ Route::post('/user/{user}/permissions', [UserPermissionController::class , 'stor
 Route::resource('products',ProductController::class)->except('show');
 Route::resource('comments',CommentController::class)->only(['index','destroy','update']);
 Route::resource('categories',CategoryController::class)->except('show');
+Route::resource('orders',OrderController::class)->except(['store','create']);
+Route::get('/payments/{order}',[OrderController::class ,'payments'])->name('order.show.payments');

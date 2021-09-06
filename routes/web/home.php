@@ -31,6 +31,8 @@ Route::middleware(['auth','verified'])->prefix('profile')->group( function (){
     Route::get('/twofactor/phone', [ProfileController::class, 'getPhoneVerify'])->name('phone.verify');
     Route::post('/twofactor/phone', [ProfileController::class, 'postPhoneVerify'])->name('post.phone.verify');
     Route::get('/orders', [OrderController::class, 'index'])->name('profile.orders');
+    Route::get('/order/{order}', [OrderController::class, 'single'])->name('profile.order');
+    Route::get('/order/{order}/payment', [OrderController::class, 'payment'])->name('profile.order.payment');
 });
 Route::get('/products', [ProductController::class, 'index'])->name('products.list');
 Route::get('/product/{product}', [ProductController::class, 'single'])->name('product.single');

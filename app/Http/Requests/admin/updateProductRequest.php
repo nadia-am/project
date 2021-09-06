@@ -28,6 +28,7 @@ class updateProductRequest extends FormRequest
             'description'=>'required|min:5',
             'price'=>'required|numeric',
             'inventory'=>'numeric',
+            'image'=>'nullable|image|max:2024'
         ];
     }
 }

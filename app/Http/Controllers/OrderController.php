@@ -2,13 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\profile\paymentOrderRequset;
+use App\Http\Requests\profile\showOrderRequset;
+use App\Models\Order;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
     public function index()
     {
-        $orders = auth()->user()->orders;
+        $orders = auth()->user()->orders()->latest()->paginate();
         return view('profile.orders',compact('orders'));
+    }
+
+    public function single(showOrderRequset $requset, Order $order)
+    {
+        return view('profile.order',compact('order'));
+
+    }
+
+    public function payment(paymentOrderRequset $requset ,  Order $order)
+    {
+        $res_num = Str::random();//send it to darga
+        $order->payments()->create([
+            'resnumber'=>$res_num
+        ]);
+//redirect to darga
+        return redirect()->route('callback.payment', ['id'=>$res_num]);
+
     }
 }

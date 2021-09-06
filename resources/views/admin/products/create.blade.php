@@ -15,7 +15,7 @@
         <!-- /.card-header -->
         <!-- form start -->
         @include('admin.layouts.error')
-        <form class="form-horizontal" method="post" action="{{ route('admin.products.store') }}">
+        <form class="form-horizontal" method="post" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="form-group">
@@ -33,6 +33,10 @@
                 <div class="form-group">
                     <label for="inventory" class="col-sm-2 control-label">تعداد موجودی محصول</label>
                     <input type="number" class="form-control" name="inventory" id="inventory" placeholder="تعداد موجودی محصول را وارد کنید" value="{{ old('inventory') }}">
+                </div>
+                <div class="form-group">
+                    <label for="image" class="col-sm-2 control-label">تصویر محصول</label>
+                    <input type="file" class="form-control" name="image" id="image" >
                 </div>
                 <div class="form-group">
                     <label for="inventory" class="col-sm-2 control-label">دسته بندی </label>

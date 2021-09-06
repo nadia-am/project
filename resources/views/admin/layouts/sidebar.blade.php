@@ -72,6 +72,57 @@
                         </li>
                     @endcan
 
+                    @can('show-order')
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.orders.index" ,"admin.order.show.payments","admin.orders.show"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.orders.index","admin.order.show.payments","admin.orders.show" ],"active")}}">
+                                <i class="nav-icon fa fa-product-hunt"></i>
+                                <p>
+                                    بخش سفارشات
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.orders.index',['type'=>\App\Models\Order::$STATUS_UNPAID]) }}" class="nav-link {{ isUrl( route("admin.orders.index",['type'=>\App\Models\Order::$STATUS_UNPAID]))}}">
+                                        <i class="fa fa-circle-o nav-icon" style="color: yellow"></i>
+                                        <p> پرداخت نشده </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.orders.index',['type'=>\App\Models\Order::$STATUS_PAID]) }}" class="nav-link {{ isUrl( route("admin.orders.index",['type'=>\App\Models\Order::$STATUS_PAID]))}}">
+                                        <i class="fa fa-circle-o nav-icon" style="color: lightseagreen"></i>
+                                        <p> پرداخت شده </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.orders.index',['type'=>\App\Models\Order::$STATUS_PREPARATION]) }}" class="nav-link {{ isUrl( route("admin.orders.index",['type'=>\App\Models\Order::$STATUS_PREPARATION]))}}">
+                                        <i class="fa fa-circle-o nav-icon" style="color: darkolivegreen"></i>
+                                        <p> در حال پردازش  </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.orders.index' ,['type'=>\App\Models\Order::$STATUS_POSTED]) }}" class="nav-link {{ isUrl( route("admin.orders.index",['type'=>\App\Models\Order::$STATUS_POSTED]))}}">
+                                        <i class="fa fa-circle-o nav-icon" style="color: wheat"></i>
+                                        <p> ارسال شده </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.orders.index' ,['type'=>\App\Models\Order::$STATUS_RECEIVED]) }}" class="nav-link {{ isUrl( route("admin.orders.index",['type'=>\App\Models\Order::$STATUS_RECEIVED]))}}">
+                                        <i class="fa fa-circle-o nav-icon" style="color: green"></i>
+                                        <p> دریافت شده </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.orders.index' ,['type'=>\App\Models\Order::$STATUS_CANCELED]) }}" class="nav-link {{ isUrl( route("admin.orders.index",['type'=>\App\Models\Order::$STATUS_CANCELED]))}}">
+                                        <i class="fa fa-circle-o nav-icon" style="color: red"></i>
+                                        <p> لغو شده </p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    @endcan
+
                     @can('show-comment')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.comments.index" , "admin.comments.create" , "admin.comments.edit"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.comments.index" , "admin.comments.create","admin.comments.edit"],"active")}}">
