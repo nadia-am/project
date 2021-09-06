@@ -29,7 +29,11 @@ return [
     */
 
     'disks' => [
-
+        'images' => [
+            'driver' => 'local',
+            'root' => public_path('images'),
+            'url' => '/images',
+        ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

@@ -65,6 +65,7 @@
 <!-- ChartJS 1.0.2 -->
 <script src="/plugins/chartjs-old/Chart.min.js"></script>
 <script src="{{asset('js/admin.js')}}"></script>
+@yield('script')
 @include('sweet::alert')
 </body>
 </html>

@@ -37,7 +37,14 @@
                 </div>
                 <div class="form-group">
                     <label for="image" class="col-sm-2 control-label">تصویر محصول</label>
-                    <input type="file" class="form-control" name="image" id="image" >
+{{--                    <input type="file" class="form-control" name="image" id="image" >--}}
+                    <div class="input-group">
+                        <input type="text" id="image_label" class="form-control" name="image"
+                               aria-label="Image" aria-describedby="button-image" value="{{ old('image',$product->image) }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-image">Select</button>
+                        </div>
+                    </div>
                 </div>
                 @if($product->image)
                     <div class="form-group">

@@ -46,16 +46,16 @@ class ProductController extends Controller
      */
     public function store(storProductRequest $request)
     {
-        $file = $request->file('image');
-        $image_name = $request->file('image')->getClientOriginalName();
-        $image_path = '/images/'. now()->year . '/' . now()->month . '/' ;
-        $file->move(public_path($image_path) , $image_name);
+//        $file = $request->file('image');
+//        $image_name = $request->file('image')->getClientOriginalName();
+//        $image_path = '/images/'. now()->year . '/' . now()->month . '/' ;
+//        $file->move(public_path($image_path) , $image_name);
         $product = auth()->user()->products()->save(new Product([
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
             'inventory' => $request->inventory ? $request->inventory : 0,
-            'image'=> $image_path . $image_name
+            'image'=> $request->image
         ]));
         $product->categories()->sync($request->categories);
         alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
@@ -87,23 +87,24 @@ class ProductController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
-            'inventory' => $request->inventory ? $request->inventory : 0
+            'inventory' => $request->inventory ? $request->inventory : 0,
+            'image' => $request->image,
         ]);
-        if ($request->hasFile('image') ){
-            /* get new uploaded file*/
-            $file = $request->file('image');
-            $image_name = $request->file('image')->getClientOriginalName();
-            $image_path = '/images/'. now()->year . '/' . now()->month . '/' ;
-            $mg = $image_path . $image_name;
-            /* delete old uploaded image */
-            if(File::exists(public_path($product->image))){
-                File::delete(public_path($product->image));
-            }
-            /* upload new image */
-            $file->move(public_path($image_path) , $image_name);
-            $product->image = $image_path . $image_name;
-            $product->save();
-        }
+//        if ($request->hasFile('image') ){
+//            /* get new uploaded file*/
+//            $file = $request->file('image');
+//            $image_name = $request->file('image')->getClientOriginalName();
+//            $image_path = '/images/'. now()->year . '/' . now()->month . '/' ;
+//            $mg = $image_path . $image_name;
+//            /* delete old uploaded image */
+//            if(File::exists(public_path($product->image))){
+//                File::delete(public_path($product->image));
+//            }
+//            /* upload new image */
+//            $file->move(public_path($image_path) , $image_name);
+//            $product->image = $image_path . $image_name;
+//            $product->save();
+//        }
         $product->categories()->sync($request->categories);
         alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.products.index'));
