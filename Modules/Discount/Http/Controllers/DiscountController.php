@@ -5,6 +5,7 @@ namespace Modules\Discount\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Discount\Entities\Discount;
 
 class DiscountController extends Controller
 {
@@ -14,7 +15,7 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        return view('discount::index');
+
     }
 
     /**

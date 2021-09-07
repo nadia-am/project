@@ -75,7 +75,7 @@
                     @can('show-order')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.orders.index" ,"admin.order.show.payments","admin.orders.show"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.orders.index","admin.order.show.payments","admin.orders.show" ],"active")}}">
-                                <i class="nav-icon fa fa-product-hunt"></i>
+                                <i class="nav-icon fa fa-first-order"></i>
                                 <p>
                                     بخش سفارشات
                                     <i class="right fa fa-angle-left"></i>
@@ -137,6 +137,27 @@
                                     <a href="{{ route('admin.comments.index') }}" class="nav-link {{ isActive( "admin.comments.index","active")}}">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>لیست نظرات</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    @endcan
+
+                    @can('show-discount')
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.discount.index" , "admin.discount.create" , "admin.discount.edit"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.discount.index" , "admin.discount.create","admin.discount.edit"],"active")}}">
+                                <i class="nav-icon fa fa-money"></i>
+                                <p>
+                                    کد تخفیف
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.discount.index') }}" class="nav-link {{ isActive( "admin.discount.index","active")}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>لیست کد تخفیف</p>
                                     </a>
                                 </li>
 

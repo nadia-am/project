@@ -3,8 +3,12 @@
 namespace Modules\Discount\Http\Controllers\Admin;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Discount\Entities\Discount;
+use Modules\Discount\Http\Requests\createDiscountRequest;
+use Modules\Discount\Http\Requests\updateDiscountRequest;
 
 class DiscountController extends Controller
 {
@@ -14,7 +18,18 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        return view('discount::index');
+        $discounts = Discount::query();
+        if ($key = \request('search')){
+            $discounts = $discounts->where('name','like',"%{$key}%")
+                ->orWhereHas('products', function (Builder $query) use($key){
+                    $query->where('title', 'like', "%{$key}%");
+                })
+                ->orWhereHas('categories', function (Builder $query) use($key){
+                    $query->where('name', 'like', "%{$key}%");
+                });
+        }
+        $discounts = $discounts->latest()->paginate(20);
+        return view('discount::admin.all' , compact('discounts'));
     }
 
     /**
@@ -23,57 +38,69 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        return view('discount::create');
+        return view('discount::admin.create');
     }
 
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
+     * @return void
      */
-    public function store(Request $request)
+    public function store(createDiscountRequest $request)
     {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('discount::show');
+        $users =  json_encode($request->users);
+        $discount = Discount::create([
+            'code'=> $request->code,
+            'percent'=> $request->percent,
+            'user'=> $users,
+            'expired_d'=> $request->expired_d
+        ]);
+        $discount->products()->sync($request->products);
+        $discount->categories()->sync($request->categories);
+        alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+        return redirect(route('admin.discount.index'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param Discount $discount
      * @return Renderable
      */
-    public function edit($id)
+    public function edit(Discount $discount)
     {
-        return view('discount::edit');
+        return view('discount::admin.edit',compact('discount'));
     }
 
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
-     * @return Renderable
+     * @param Discount $discount
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(updateDiscountRequest $request, Discount $discount)
     {
-        //
+        $users =  json_encode($request->users);
+        $discount->update([
+            'code'=> $request->code,
+            'percent'=> $request->percent,
+            'user'=> $users,
+            'expired_d'=> $request->expired_d
+        ]);
+        $discount->products()->sync($discount->products);
+        $discount->categories()->sync($discount->categories);
+        alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        return redirect(route('admin.discount.index'));
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
+     * @param Discount $discount
+     * @return void
      */
-    public function destroy($id)
+    public function destroy(Discount $discount)
     {
-        //
+        $discount->delete();
+        alert()->success('حذف با موفقیت انجام گرفت', 'عملیات موفق');
+        return redirect(route('admin.discount.index'));
     }
 }

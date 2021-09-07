@@ -18,7 +18,7 @@ class CreateDiscountsTable extends Migration
             $table->string('code');
             $table->integer('percent');
             $table->string('user')->nullable();
-            $table->timestamp('expired_d')->nullable();
+            $table->timestamp('expired_at')->nullable();
             $table->timestamps();
         });
 

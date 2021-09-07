@@ -77,8 +77,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param updateProductRequest $request
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function update(updateProductRequest $request, Product $product)
