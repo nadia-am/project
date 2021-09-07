@@ -1,4 +1,5 @@
 <x-admin.content >
+    <x-slot name="script"></x-slot>
     <x-slot name="title">ایجاد دسترسی جدید </x-slot>
     <x-slot name="breadcrums">
         <li class="breadcrumb-item"><a href="#">خانه</a></li>

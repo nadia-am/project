@@ -11,14 +11,12 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
                         {{ $breadcrums }}
-
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">

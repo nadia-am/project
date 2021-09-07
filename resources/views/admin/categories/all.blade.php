@@ -1,4 +1,5 @@
-<x-admin.content >
+<x-admin.content>
+    <x-slot name="script"></x-slot>
     <x-slot name="title">
         لیست دسته بندی ها
     </x-slot>

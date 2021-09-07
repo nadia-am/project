@@ -1,21 +1,25 @@
 @extends('admin.master')
+
 @section('script')
     <script src="/js/ckeditor/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace( 'description' );
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById('button-image').addEventListener('click', (event) => {
-                event.preventDefault();
-
-                window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
-            });
-        });
+        CKEDITOR.replace('description', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});
+        // CKEDITOR.replace( 'description' );
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     document.getElementById('button-image').addEventListener('click', (event) => {
+        //         event.preventDefault();
+        //
+        //         window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+        //     });
+        // });
         // set file link
         function fmSetLink($url) {
             document.getElementById('image_label').value = $url;
         }
     </script>
+    {{ $script }}
 @endsection
+
 @section('content')
     <!-- Content Header (Page header) -->
     <div class="content-header">

@@ -1,4 +1,5 @@
 <x-admin.content >
+    <x-slot name="script"></x-slot>
     <x-slot name="title">
         لیست محصولات
     </x-slot>
@@ -63,6 +64,9 @@
                                             @csrf
                                             <button class="btn btn-sm btn-danger mr-1">حذف</button>
                                         </form>
+                                    @endcan
+                                    @can('show-galleries')
+                                        <a href="{{ route('admin.products.galleries.index' , ['product'=>$product->id]) }}" class="btn btn-sm btn-warning mr-1">گالری تصاویر</a>
                                     @endcan
                                 </td>
                             </tr>

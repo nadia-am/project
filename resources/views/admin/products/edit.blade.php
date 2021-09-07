@@ -1,4 +1,5 @@
 <x-admin.content >
+    <x-slot name="script"></x-slot>
     <x-slot name="title">
         ویرایش محصول
     </x-slot>
@@ -40,18 +41,13 @@
 {{--                    <input type="file" class="form-control" name="image" id="image" >--}}
                     <div class="input-group">
                         <input type="text" id="image_label" class="form-control" name="image"
-                               aria-label="Image" aria-describedby="button-image" value="{{ old('image',$product->image) }}">
+                               aria-label="Image" aria-describedby="button-image" value="{{ old('image',$product->image) }}" dir="ltr">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-image">Select</button>
+                            <button class="btn btn-outline-secondary" type="button" id="button-image">انتخاب تصاویر</button>
                         </div>
                     </div>
                 </div>
-                @if($product->image)
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="old-pic" id="old-pic"  dir="ltr" value="{{ $product->image }}" disabled >
-                        <img src="{{$product->image}}" class="w-25 mt-2" alt="تصویر محصول" >
-                    </div>
-                @endif
+
                 <div class="form-group">
                     <label for="inventory" class="col-sm-2 control-label">دسته بندی </label>
                     <select name="categories[]" class="form-control" id="categories" multiple>

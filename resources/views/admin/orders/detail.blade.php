@@ -1,4 +1,5 @@
 <x-admin.content >
+    <x-slot name="script"></x-slot>
     <x-slot name="title">
         لیست سفارشات
     </x-slot>
