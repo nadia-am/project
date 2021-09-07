@@ -9,10 +9,20 @@ class Discount extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
-    
+    protected $fillable = [
+        'code',
+        'percent',
+        'user',
+        'percent',
+    ];
+
     protected static function newFactory()
     {
         return \Modules\Discount\Database\factories\DiscountFactory::new();
+    }
+
+    public function products()
+    {
+        
     }
 }
