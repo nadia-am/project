@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticateTokenController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -12,9 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [IndexController::class , 'index']);
 Auth::routes(['verify'=>true]);
 Route::prefix('auth')->group(function (){
     Route::get('/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.redirect');
