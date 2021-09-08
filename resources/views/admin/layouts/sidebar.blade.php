@@ -50,7 +50,6 @@
                             </ul>
                         </li>
                     @endcan
-
                     @can('show-product')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.products.index" , "admin.products.create" , "admin.products.edit"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.products.index" , "admin.products.create", "admin.products.edit"],"active")}}">
@@ -71,7 +70,6 @@
                             </ul>
                         </li>
                     @endcan
-
                     @can('show-order')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.orders.index" ,"admin.order.show.payments","admin.orders.show"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.orders.index","admin.order.show.payments","admin.orders.show" ],"active")}}">
@@ -160,7 +158,6 @@
                                         <p>لیست کد تخفیف</p>
                                     </a>
                                 </li>
-
                             </ul>
                         </li>
                     @endcan
@@ -181,7 +178,6 @@
                                         <p>لیست دسته بندی ها</p>
                                     </a>
                                 </li>
-
                             </ul>
                         </li>
                     @endcan
@@ -197,14 +193,12 @@
                             </a>
                             @can('show-permissions')
                                 <ul class="nav nav-treeview">
-
                                     <li class="nav-item">
                                         <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ isActive( ["admin.permissions.index", "admin.permissions.create"],"active")}}">
                                             <i class="fa fa-circle-o nav-icon"></i>
                                             <p>لیست دسترسی ها</p>
                                         </a>
                                     </li>
-
                                 </ul>
                             @endcan
 

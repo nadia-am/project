@@ -96,17 +96,41 @@
                 </div>
                 <!-- / Shopping cart table -->
                 <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                    <form class="mt-4" method="post" action="{{ route('discount.check') }}">
-                        @csrf
-                        <input type="hidden" name="my-cart" value="my-cart" >
-                        <input type="text" name="code" class="form-control"  placeholder="کد تخفیف دارید؟">
-                        <button type="submit" class="btn-sm btn btn-success mt-2 mb-2">اعمال کد تخفیف</button>
-                        @if ($errors->any())
-                            <div class="alert alert-danger small-box ">
-                                {{  $errors->first() }}
-                            </div>
+                    <div class="mt-4 ">
+                        @php
+                            $modals_obj =  \Module::getByStatus(1);
+                            $modals = array_keys($modals_obj);
+                        @endphp
+                        @if(in_array('Discount' , $modals))
+                            @if( $discount = \App\Helpers\Cart\Cart::getDiscount() )
+                                <form action="{{ route('discount.remove') }}" method="post" id="removediscount">
+                                    @method('delete')
+                                    @csrf
+                                </form>
+                                کد تخفیف فعال :
+                                <span class="text-sm text-success"> {{ $discount->code }}</span>
+                                <a href="#" onclick="event.preventDefault(); document.getElementById('removediscount').submit()" class="badge badge-danger "> حذف </a>
+                                <div>
+                                    درصد تخفیف :
+                                    <span class="text-sm text-success"> {{ $discount->percent }}</span>
+                                </div>
+
+                            @else
+                                <form class="mt-4" method="post" action="{{ route('discount.check') }}">
+                                    @csrf
+                                    <input type="text" name="code" class="form-control"  placeholder="کد تخفیف دارید؟">
+                                    <button type="submit" class="btn-sm btn btn-success mt-2 mb-2">اعمال کد تخفیف</button>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger small-box ">
+                                            {{  $errors->first() }}
+                                        </div>
+                                    @endif
+                                </form>
+                            @endif
                         @endif
-                    </form>
+
+                    </div>
+
                     <div class="d-flex">
                         <div class="text-right mt-4">
                             <label class="text-muted font-weight-normal m-0">قیمت کل</label>

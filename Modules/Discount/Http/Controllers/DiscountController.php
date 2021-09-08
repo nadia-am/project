@@ -4,6 +4,7 @@ namespace Modules\Discount\Http\Controllers;
 
 use App\Helpers\Cart\Cart;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Request;
 use Modules\Discount\Entities\Discount;
 use Modules\Discount\Http\Requests\checkDiscountRequest;
 
@@ -36,5 +37,11 @@ class DiscountController extends Controller
         Cart::addDiscount($discount->code);
         return back();
 
+    }
+
+    public function remove(Request $request)
+    {
+        Cart::addDiscount(null);
+        return back();
     }
 }

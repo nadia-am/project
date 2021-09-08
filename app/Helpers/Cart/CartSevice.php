@@ -130,6 +130,11 @@ class CartSevice
         $this->saveCookie();
     }
 
+    public function getDiscount(){
+        $discount = Discount::where('code', $this->cart['discount'] )->first();
+        return $discount;
+    }
+
     protected function AddModelIfExist($item)
     {
         if ( isset($item['subject_id']) && isset($item['subject_type']) ){

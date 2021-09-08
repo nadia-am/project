@@ -6,6 +6,7 @@ namespace App\Helpers\Cart;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
+use Modules\Discount\Entities\Discount;
 use phpDocumentor\Reflection\Types\Boolean;
 use phpDocumentor\Reflection\Types\Collection;
 use phpDocumentor\Reflection\Types\Integer;
@@ -23,6 +24,7 @@ use phpDocumentor\Reflection\Types\Integer;
  * @method  static Cart flush()
  * @method  static Cart instance()
  * @method  static Void addDiscount(String $code)
+ * @method  static Discount getDiscount( )
  */
 class Cart extends Facade
 {
