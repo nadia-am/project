@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Discount\Entities\Discount;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -50,6 +51,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function discounts()
+    {
+        return $this->belongsToMany(Discount::class);
     }
 
     public function permissions()

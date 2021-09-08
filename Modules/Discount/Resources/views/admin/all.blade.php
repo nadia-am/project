@@ -43,6 +43,7 @@
                             <th>مربوط به کاربر</th>
                             <th>مربوط به محصول</th>
                             <th>مربوط به دسته</th>
+                            <th>زمان انقضای کد</th>
                             <th>اقدامات</th>
                         </tr>
                         @foreach($discounts as $discount)
@@ -50,13 +51,11 @@
                                 <td>{{ $discount->id }}</td>
                                 <td> {{ $discount->code }} </td>
                                 <td> {{ $discount->percent }}</td>
-                                <td>
-                                @foreach(json_decode($discount->user) as $user)
-                                    <span class="badge badge-pill"> {{ $user }}  </span>
-                                @endforeach
-                                </td>
-                                <td> {{ $discount->products->count() ? $discount->products->pluck('title')->join(', ') : '' }} </td>
-                                <td> {{ $discount->categories->count() ? $discount->categories->pluck('name')->join(', ') : '' }} </td>
+
+                                <td> {{ $discount->users->count() ? $discount->users->pluck('name')->join(', ') : 'همه کاربران' }} </td>
+                                <td> {{ $discount->products->count() ? $discount->products->pluck('title')->join(', ') : 'همه محصولات' }} </td>
+                                <td> {{ $discount->categories->count() ? $discount->categories->pluck('name')->join(', ') : 'همه دسته ها' }} </td>
+                                <td> {{ jdate($discount->expired_at)->ago() }} </td>
                                 <td  class="d-flex">
                                     @can('edit-discount')
                                         <a href="{{ route('admin.discount.edit' , ['discount'=>$discount->id]) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>

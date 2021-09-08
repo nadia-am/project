@@ -28,11 +28,11 @@
                     <input type="number" class="form-control" name="percent" id="percent" placeholder="درصد تخفیف را وارد کنید" value="{{ old('percent') }}">
                 </div>
                 <div class="form-group">
-                    <label for="users" class="col-sm-2 control-label">کاربران </label>
+                    <label for="users" class="col-sm-2 control-label">کاربر مورد نظر را انتخاب کنید (اختیاری) </label>
                     <select name="users[]" class="form-control" id="users" multiple>
                         @foreach(\App\Models\User::all() as $user)
-                            <option value="{{ $user->email }}"  >
-                                {{ $user->email }}
+                            <option value="{{ $user->id }}"  >
+                                {{ $user->name }}
                             </option>
                         @endforeach
                     </select>
@@ -58,6 +58,10 @@
                         @endforeach
                     </select>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="expired_at" class="col-sm-2 control-label">زمان انقضای کد تخفیف</label>
+                <input type="date" class="form-control" name="expired_at" id="expired_at"  value="{{ old('expired_at') }}">
             </div>
             <!-- /.card-body -->
             <div class="card-footer">

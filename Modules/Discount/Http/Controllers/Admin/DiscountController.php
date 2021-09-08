@@ -52,11 +52,11 @@ class DiscountController extends Controller
         $discount = Discount::create([
             'code'=> $request->code,
             'percent'=> $request->percent,
-            'user'=> $users,
-            'expired_d'=> $request->expired_d
+            'expired_at'=> $request->expired_at
         ]);
         $discount->products()->sync($request->products);
         $discount->categories()->sync($request->categories);
+        $discount->users()->sync($request->users);
         alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.discount.index'));
     }
@@ -83,11 +83,11 @@ class DiscountController extends Controller
         $discount->update([
             'code'=> $request->code,
             'percent'=> $request->percent,
-            'user'=> $users,
-            'expired_d'=> $request->expired_d
+            'expired_d'=> $request->expired_at
         ]);
         $discount->products()->sync($request->products);
         $discount->categories()->sync($request->categories);
+        $discount->users()->sync($request->users);
         alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.discount.index'));
     }

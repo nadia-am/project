@@ -4,7 +4,7 @@ namespace Modules\Discount\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class createDiscountRequest extends FormRequest
+class checkDiscountRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,12 +14,7 @@ class createDiscountRequest extends FormRequest
     public function rules()
     {
         return [
-            'code'=> 'required|min:2|unique:discounts,code',
-            'percent'=> 'required|between:1,99',
-            'users'=> 'nullable|array|exists:users,id',
-            'products'=> 'nullable|array|exists:products,id',
-            'categories'=> 'nullable|array|exists:categories,id',
-            'expired_at'=> 'required',
+            'code'=>'required|exists:discounts,code'
         ];
     }
 

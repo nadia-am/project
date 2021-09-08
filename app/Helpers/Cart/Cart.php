@@ -21,6 +21,8 @@ use phpDocumentor\Reflection\Types\Integer;
  * @method  static Cart update($key ,  $option)
  * @method  static Cart delete($key)
  * @method  static Cart flush()
+ * @method  static Cart instance()
+ * @method  static Void addDiscount(String $code)
  */
 class Cart extends Facade
 {

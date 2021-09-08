@@ -15,7 +15,8 @@ class PaymentController extends Controller
         $cart_list = Cart::all();
 
         $price = $cart_list->sum(function ($cart){
-            return $cart['product']->price * $cart['quantity'];
+//            return $cart['product']->price * $cart['quantity'];
+            return ($cart['product']->price - ($cart['product']->price * $cart['discount_percent'])) * $cart['quantity'];
         });
         $cart_data = $cart_list->mapWithKeys(function ($cart){
             return [ $cart['product']->id => [ 'quantity'=> $cart['quantity'] ] ];

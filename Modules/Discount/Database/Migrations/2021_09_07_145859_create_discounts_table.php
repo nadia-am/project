@@ -43,6 +43,17 @@ class CreateDiscountsTable extends Migration
                 ->onDelete('cascade');
             $table->primary(['category_id','discount_id']);
         });
+
+        Schema::create('discount_user', function (Blueprint $table) {
+            $table->foreignId('discount_id')
+                ->constrained('discounts')
+                ->onDelete('cascade');
+
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+            $table->primary(['user_id','discount_id']);
+        });
     }
 
     /**
@@ -52,6 +63,9 @@ class CreateDiscountsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('discount_user');
+        Schema::dropIfExists('discount_product');
+        Schema::dropIfExists('category_discount');
         Schema::dropIfExists('discounts');
     }
 }

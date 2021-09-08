@@ -58,7 +58,14 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-right font-weight-semibold align-middle p-4">{{ $product->price }} تومان</td>
+                                <td class="text-right font-weight-semibold align-middle p-4">
+                                    @if($cart['discount_percent'] > 0)
+                                        <del class="text-danger text-sm"> {{ $product->price }} تومان</del>
+                                        {{ $product->price - ($product->price * $cart['discount_percent'])  }} تومان
+                                    @else
+                                        {{ $product->price }} تومان
+                                    @endif
+                                </td>
                                 <td class="align-middle p-4">
                                     <select onchange="changeQuantity(event, '{{ $cart['id'] }}')" class="form-control text-center">
                                         @for($i=1 ; $i<= $product->inventory ; $i++)
@@ -67,8 +74,13 @@
                                     </select>
                                 </td>
                                 <td class="text-right font-weight-semibold align-middle p-4">
-                                    تومان
-                                    {{ $cart['quantity'] * $product->price }}
+                                    @if($cart['discount_percent'] > 0)
+                                        <del class="text-danger text-sm"> {{ $cart['quantity'] * $product->price }} تومان</del>
+                                        {{ ( $product->price - ( $product->price * $cart['discount_percent'] ))  * $cart['quantity']  }}
+                                        تومان
+                                    @else
+                                        {{ $cart['quantity'] * $product->price }} تومان
+                                    @endif
                                 </td>
                                 <td class="text-center align-middle px-0">
                                     <form action="{{ route('delete.cart',$product->id ) }}" id="delete-cart-{{ $cart['id'] }}" method="post">
@@ -84,13 +96,23 @@
                 </div>
                 <!-- / Shopping cart table -->
                 <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                    <div class="mt-4"></div>
+                    <form class="mt-4" method="post" action="{{ route('discount.check') }}">
+                        @csrf
+                        <input type="hidden" name="my-cart" value="my-cart" >
+                        <input type="text" name="code" class="form-control"  placeholder="کد تخفیف دارید؟">
+                        <button type="submit" class="btn-sm btn btn-success mt-2 mb-2">اعمال کد تخفیف</button>
+                        @if ($errors->any())
+                            <div class="alert alert-danger small-box ">
+                                {{  $errors->first() }}
+                            </div>
+                        @endif
+                    </form>
                     <div class="d-flex">
                         <div class="text-right mt-4">
                             <label class="text-muted font-weight-normal m-0">قیمت کل</label>
                             @php
                                 $total = \App\Helpers\Cart\Cart::all()->sum(function ($cart) {
-                                                return $cart['product']->price * $cart['quantity'];
+                                                return ($cart['product']->price - ($cart['product']->price * $cart['discount_percent'])) * $cart['quantity'];
                                             });
                             @endphp
                             <div class="text-large"><strong>{{ $total }} تومان</strong></div>
