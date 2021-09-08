@@ -86,8 +86,8 @@ class DiscountController extends Controller
             'user'=> $users,
             'expired_d'=> $request->expired_d
         ]);
-        $discount->products()->sync($discount->products);
-        $discount->categories()->sync($discount->categories);
+        $discount->products()->sync($request->products);
+        $discount->categories()->sync($request->categories);
         alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.discount.index'));
     }
