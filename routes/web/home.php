@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [IndexController::class , 'index']);
+//Route::get('/', [IndexController::class , 'index']);
+Route::get('/', [ProductController::class, 'index']);
 Auth::routes(['verify'=>true]);
 Route::prefix('auth')->group(function (){
     Route::get('/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.redirect');
