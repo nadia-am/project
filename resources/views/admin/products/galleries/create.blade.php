@@ -48,6 +48,7 @@
 
             // input
             let image;
+
             $('body').on('click','.button-image' , (event) => {
                 event.preventDefault();
 

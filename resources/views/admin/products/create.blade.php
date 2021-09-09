@@ -1,5 +1,7 @@
 <x-admin.content >
-    <x-slot name="script"></x-slot>
+    <x-slot name="script">
+
+    </x-slot>
     <x-slot name="title">
         ایجاد محصول جدید
     </x-slot>
@@ -39,8 +41,7 @@
                     <label for="image" class="col-sm-2 control-label">تصویر محصول</label>
 {{--                    <input type="file" class="form-control" name="image" id="image" >--}}
                     <div class="input-group">
-                        <input type="text" id="image_label" class="form-control" name="image"
-                               aria-label="Image" aria-describedby="button-image">
+                        <input type="text" id="image_label" class="form-control" name="image" aria-label="Image" aria-describedby="button-image">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="button-image">انتخاب تصاویر</button>
                         </div>
