@@ -12,10 +12,10 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:show-user')->only(['index']);
-        $this->middleware('can:create-user')->only(['create','store']);
-        $this->middleware('can:edit-user')->only(['edit' , 'update']);
-        $this->middleware('can:delete-user')->only(['destroy']);
+        $this->middleware('can:show-users')->only(['index']);
+        $this->middleware('can:create-users')->only(['create','store']);
+        $this->middleware('can:edit-users')->only(['edit' , 'update']);
+        $this->middleware('can:delete-users')->only(['destroy']);
     }
 
     /**
@@ -26,6 +26,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::query();
+
         if ($key = request('search')){
             $users = $users->where('email','like', "%{$key}%")
                 ->orWhere('name','like', "%{$key}%")
@@ -131,6 +132,23 @@ class UserController extends Controller
     {
         $user->delete();
         alert()->success('حذف با موفقیت انجام گرفت', 'عملیات موفق');
+        return back();
+    }
+
+    public function normal(User $user)
+    {
+        $user->update([
+            'is_staff'=>false
+        ]);
+        return back();
+
+    }
+
+    public function staff(User $user)
+    {
+        $user->update([
+            'is_staff'=>true
+        ]);
         return back();
     }
 }

@@ -8,6 +8,13 @@ use Illuminate\Routing\Controller;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-comments')->only(['index']);
+        $this->middleware('can:create-comments')->only(['create','store']);
+        $this->middleware('can:edit-comments')->only(['edit' , 'update']);
+        $this->middleware('can:delete-comments')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      *

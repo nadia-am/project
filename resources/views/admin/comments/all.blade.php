@@ -52,7 +52,7 @@
                                 </td>
                                 <td  class="d-flex">
 
-                                    @can('edit-comment')
+                                    @can('edit-comments')
                                         <form action="{{ route('admin.comments.update' , ['comment'=>$comment->id]) }}" method="post" >
                                             @method('put')
                                             @csrf
@@ -60,7 +60,7 @@
                                         </form>
                                     @endcan
 
-                                    @can('delete-comment')
+                                    @can('delete-comments')
                                         <form action="{{ route('admin.comments.destroy' , ['comment'=>$comment->id]) }}" method="post" >
                                             @method('delete')
                                             @csrf

@@ -25,7 +25,7 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-2">
-                            @can('create-discount')
+                            @can('create-discounts')
                                 <a href="{{ route('admin.discount.create') }}" class="btn btn-info">ایجاد کد تخفیف جدید</a>
                             @endcan
 
@@ -57,11 +57,11 @@
                                 <td> {{ $discount->categories->count() ? $discount->categories->pluck('name')->join(', ') : 'همه دسته ها' }} </td>
                                 <td> {{ jdate($discount->expired_at)->ago() }} </td>
                                 <td  class="d-flex">
-                                    @can('edit-discount')
+                                    @can('edit-discounts')
                                         <a href="{{ route('admin.discount.edit' , ['discount'=>$discount->id]) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
                                     @endcan
 
-                                    @can('delete-discount')
+                                    @can('delete-discounts')
                                         <form action="{{ route('admin.discount.destroy' , ['discount'=>$discount->id]) }}" method="post" >
                                             @method('delete')
                                             @csrf

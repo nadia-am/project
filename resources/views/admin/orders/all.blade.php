@@ -13,7 +13,6 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title"> سفارشات </h3>
-
                     <div class="card-tools d-flex">
                         <form action="">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -25,7 +24,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -72,10 +70,8 @@
                             <td> {{ $order->tracing_serial ?? 'ثبت نشده' }} </td>
                             <td> {{ jdate($order->created_at)->ago() }} </td>
                             <td  class="d-flex">
-                                @can('show-order')
+                                @can('show-orders')
                                     <a href="{{ route('admin.orders.show' , ['order'=>$order->id]) }}" class="btn btn-sm btn-default">مشاهده جزئیات سفارش</a>
-                                @endcan
-                                @can('show-order-payment')
                                     <a href="{{ route('admin.order.show.payments' , ['order'=>$order->id]) }}" class="btn btn-sm btn-info mr-1">مشاهده پرداخت ها</a>
                                 @endcan
                                 @can('edit-orders')

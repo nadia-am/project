@@ -25,12 +25,10 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-2">
-                            @can('create-user')
+                            @can('create-users')
                                 <a href="{{ route('admin.users.create') }}" class="btn btn-info">ایجاد کاربر جدید</a>
                             @endcan
-                            @can('show-staff-user')
-                                <a href="{{ request()->fullUrlWithQuery(['admin'=>1]) }}" class="btn btn-warning">نمایش کاربران ادمین</a>
-                            @endcan
+                            <a href="{{ request()->fullUrlWithQuery(['admin'=>1]) }}" class="btn btn-warning">نمایش کاربران ادمین</a>
                         </div>
                     </div>
                 </div>
@@ -60,22 +58,30 @@
                                 </td>
                                 <td  class="d-flex">
                                     @if(auth()->user()->isSuperUser())
-                                        @can('stafff-users-permission')
+                                        @can('users-permissions')
                                             <a href="{{ route('admin.users.permissions',$user->id) }}" class="btn btn-sm btn-info">دسترسی ها</a>
                                         @endcan
                                     @endif
 
-                                    @can('edit-user')
+                                    @can('edit-users')
                                         <a href="{{ route('admin.users.edit' , ['user'=>$user->id]) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
                                     @endcan
 
-                                    @can('delete-user')
+                                    @can('delete-users')
                                         <form action="{{ route('admin.users.destroy' , ['user'=>$user->id]) }}" method="post" >
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-sm btn-danger mr-1">حذف</button>
                                         </form>
                                     @endcan
+                                    @if($user->id != auth()->user()->id)
+                                            @if( $user->isStaff()  )
+                                                <a href="{{ route('admin.users.normal' , ['user'=>$user->id]) }}" class="btn btn-sm btn-dark mr-1 " > تبدیل به کاربر معمولی </a>
+                                            @else
+                                                <a href="{{ route('admin.users.staff' , ['user'=>$user->id]) }}" class="btn btn-sm btn-secondary mr-1   ">تبدیل به مدیر</a>
+                                            @endif
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach

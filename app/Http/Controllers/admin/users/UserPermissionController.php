@@ -19,6 +19,5 @@ class UserPermissionController extends Controller
         $user->roles()->sync( $request->roles );
         alert()->success('عملیات با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.users.index'));
-
     }
 }

@@ -10,10 +10,11 @@ use Modules\Discount\Http\Requests\checkDiscountRequest;
 
 class DiscountController extends Controller
 {
+
+
     public function check(checkDiscountRequest $request)
     {
         $discount = Discount::whereCode($request->code)->first();
-
         if (! auth()->check()){
             return back()->withErrors([
                 'discount'=>'برای استفاده از کد تخفیف ابتدا ورود کنید'

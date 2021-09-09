@@ -25,7 +25,7 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-2">
-                            @can('create-product')
+                            @can('create-products')
                                 <a href="{{ route('admin.products.create') }}" class="btn btn-info">ایجاد محصول جدید</a>
                             @endcan
 
@@ -54,20 +54,18 @@
                                 <td> {{ $product->inventory }} </td>
                                 <td> {{ $product->viewCount }} </td>
                                 <td  class="d-flex">
-                                    @can('edit-product')
+                                    @can('edit-products')
                                         <a href="{{ route('admin.products.edit' , ['product'=>$product->id]) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
                                     @endcan
 
-                                    @can('delete-product')
+                                    @can('delete-products')
                                         <form action="{{ route('admin.products.destroy' , ['product'=>$product->id]) }}" method="post" >
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-sm btn-danger mr-1">حذف</button>
                                         </form>
                                     @endcan
-                                    @can('show-galleries')
-                                        <a href="{{ route('admin.products.galleries.index' , ['product'=>$product->id]) }}" class="btn btn-sm btn-warning mr-1">گالری تصاویر</a>
-                                    @endcan
+                                    <a href="{{ route('admin.products.galleries.index' , ['product'=>$product->id]) }}" class="btn btn-sm btn-warning mr-1">گالری تصاویر</a>
                                 </td>
                             </tr>
                         @endforeach

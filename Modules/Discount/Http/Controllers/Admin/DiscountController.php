@@ -12,6 +12,13 @@ use Modules\Discount\Http\Requests\updateDiscountRequest;
 
 class DiscountController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-discounts')->only(['index']);
+        $this->middleware('can:create-discounts')->only(['create','store']);
+        $this->middleware('can:edit-discounts')->only(['edit' , 'update']);
+        $this->middleware('can:delete-discounts')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable

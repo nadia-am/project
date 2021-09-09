@@ -11,11 +11,8 @@
         <div>
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="https://www.gravatar.com/avatar/52f0fbcbedee04a121cba8dad1174462?s=200&d=mm&r=g" class="img-circle elevation-2" alt="User Image">
-                </div>
                 <div class="info">
-                    <a href="#" class="d-block">حسام موسوی</a>
+                    <a href="#" class="d-block">{{ auth()->user()->name }}</a>
                 </div>
             </div>
 
@@ -30,7 +27,7 @@
                             </p>
                         </a>
                     </li>
-                    @can('show-user')
+                    @can('show-users')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.users.index" , "admin.users.create", "admin.users.edit"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.users.index" , "admin.users.create", "admin.users.edit"],"active")}}">
                                 <i class="nav-icon fa fa-user"></i>
@@ -46,11 +43,29 @@
                                         <p>لیست کاربران</p>
                                     </a>
                                 </li>
-
                             </ul>
                         </li>
                     @endcan
-                    @can('show-product')
+                    @can('show-categories')
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.categories.index" , "admin.categories.create","admin.categories.edit"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.categories.index" , "admin.categories.create","admin.categories.edit"],"active")}}">
+                                <i class="nav-icon fa fa-comment"></i>
+                                <p>
+                                    دسته بندی ها
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.categories.index') }}" class="nav-link {{ isActive( "admin.categories.index","active")}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>لیست دسته بندی ها</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endcan
+                    @can('show-products')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.products.index" , "admin.products.create" , "admin.products.edit"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.products.index" , "admin.products.create", "admin.products.edit"],"active")}}">
                                 <i class="nav-icon fa fa-product-hunt"></i>
@@ -66,11 +81,29 @@
                                         <p>لیست محصولات</p>
                                     </a>
                                 </li>
-
                             </ul>
                         </li>
                     @endcan
-                    @can('show-order')
+                    @can('show-discounts')
+                        <li class="nav-item has-treeview {{ isActive( [ "admin.discount.index" , "admin.discount.create" , "admin.discount.edit"],"menu-open")}}">
+                            <a href="#" class="nav-link {{ isActive([ "admin.discount.index" , "admin.discount.create","admin.discount.edit"],"active")}}">
+                                <i class="nav-icon fa fa-money"></i>
+                                <p>
+                                    کد تخفیف
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.discount.index') }}" class="nav-link {{ isActive( "admin.discount.index","active")}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>لیست کد تخفیف</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endcan
+                    @can('show-orders')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.orders.index" ,"admin.order.show.payments","admin.orders.show"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.orders.index","admin.order.show.payments","admin.orders.show" ],"active")}}">
                                 <i class="nav-icon fa fa-first-order"></i>
@@ -120,8 +153,7 @@
                             </ul>
                         </li>
                     @endcan
-
-                    @can('show-comment')
+                    @can('show-comments')
                         <li class="nav-item has-treeview {{ isActive( [ "admin.comments.index" , "admin.comments.create" , "admin.comments.edit"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.comments.index" , "admin.comments.create","admin.comments.edit"],"active")}}">
                                 <i class="nav-icon fa fa-comment"></i>
@@ -141,47 +173,6 @@
                             </ul>
                         </li>
                     @endcan
-
-                    @can('show-discount')
-                        <li class="nav-item has-treeview {{ isActive( [ "admin.discount.index" , "admin.discount.create" , "admin.discount.edit"],"menu-open")}}">
-                            <a href="#" class="nav-link {{ isActive([ "admin.discount.index" , "admin.discount.create","admin.discount.edit"],"active")}}">
-                                <i class="nav-icon fa fa-money"></i>
-                                <p>
-                                    کد تخفیف
-                                    <i class="right fa fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.discount.index') }}" class="nav-link {{ isActive( "admin.discount.index","active")}}">
-                                        <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>لیست کد تخفیف</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    @endcan
-
-                    @can('show-category')
-                        <li class="nav-item has-treeview {{ isActive( [ "admin.categories.index" , "admin.categories.create","admin.categories.edit"],"menu-open")}}">
-                            <a href="#" class="nav-link {{ isActive([ "admin.categories.index" , "admin.categories.create","admin.categories.edit"],"active")}}">
-                                <i class="nav-icon fa fa-comment"></i>
-                                <p>
-                                    دسته بندی ها
-                                    <i class="right fa fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.categories.index') }}" class="nav-link {{ isActive( "admin.categories.index","active")}}">
-                                        <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>لیست دسته بندی ها</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    @endcan
-
                     @canany(['show-permissions','show-roles'])
                         <li class="nav-item has-treeview {{ isActive( [ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit","admin.roles.create"],"menu-open")}}">
                             <a href="#" class="nav-link {{ isActive([ "admin.permissions.index" , "admin.permissions.create", "admin.permissions.edit","admin.roles.index","admin.roles.edit","admin.roles.create"],"active")}}">
@@ -214,7 +205,6 @@
                             @endcan
                         </li>
                     @endcanany
-
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

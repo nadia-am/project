@@ -22,11 +22,11 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="btn-group-sm mr-2">
-                            @can('create-permissions')
-                                <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>
-                            @endcan
-                        </div>
+{{--                        <div class="btn-group-sm mr-2">--}}
+{{--                            @can('create-permissions')--}}
+{{--                                <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>--}}
+{{--                            @endcan--}}
+{{--                        </div>--}}
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -37,25 +37,25 @@
                             <th>آیدی دسترسی</th>
                             <th>نام دسترسی</th>
                             <th>برچسب دسترسی</th>
-                            <th>اقدامات</th>
+{{--                            <th>اقدامات</th>--}}
                         </tr>
                         @foreach($permissions as $permission)
                             <tr>
                                 <td>{{ $permission->id }}</td>
                                 <td> {{ $permission->name }} </td>
                                 <td> {{ $permission->label }}</td>
-                                <td  class="d-flex">
-                                    @can('edit-permissions')
-                                        <a href="{{ route('admin.permissions.edit' , ['permission'=>$permission->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>
-                                    @endcan
-                                    @can('delete-permissions')
-                                        <form action="{{ route('admin.permissions.destroy' , ['permission'=>$permission->id]) }}" method="post" >
-                                            @method('delete')
-                                            @csrf
-                                            <button class="btn btn-sm btn-danger mr-1">حذف</button>
-                                        </form>
-                                    @endcan
-                                </td>
+{{--                                <td  class="d-flex">--}}
+{{--                                    @can('edit-permissions')--}}
+{{--                                        <a href="{{ route('admin.permissions.edit' , ['permission'=>$permission->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>--}}
+{{--                                    @endcan--}}
+{{--                                    @can('delete-permissions')--}}
+{{--                                        <form action="{{ route('admin.permissions.destroy' , ['permission'=>$permission->id]) }}" method="post" >--}}
+{{--                                            @method('delete')--}}
+{{--                                            @csrf--}}
+{{--                                            <button class="btn btn-sm btn-danger mr-1">حذف</button>--}}
+{{--                                        </form>--}}
+{{--                                    @endcan--}}
+{{--                                </td>--}}
                             </tr>
                         @endforeach
 

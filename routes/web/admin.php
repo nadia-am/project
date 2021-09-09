@@ -26,3 +26,6 @@ Route::resource('comments',CommentController::class)->only(['index','destroy','u
 Route::resource('categories',CategoryController::class)->except('show');
 Route::resource('orders',OrderController::class)->except(['store','create']);
 Route::get('/payments/{order}',[OrderController::class ,'payments'])->name('order.show.payments');
+
+Route::get('/user/{user}/normal',[UserController::class , 'normal'])->name('users.normal');
+Route::get('/user/{user}/staff',[UserController::class , 'staff'])->name('users.staff');

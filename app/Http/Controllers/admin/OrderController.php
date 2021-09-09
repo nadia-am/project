@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Route;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-orders')->only(['index']);
+        $this->middleware('can:create-orders')->only(['create','store']);
+        $this->middleware('can:edit-orders')->only(['edit' , 'update']);
+        $this->middleware('can:delete-orders')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -25,7 +25,7 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-2">
-                            @can('create-category')
+                            @can('create-categories')
                                 <a href="{{ route('admin.categories.create') }}" class="btn btn-info">ایجاد دسته جدید</a>
                             @endcan
                         </div>

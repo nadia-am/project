@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-products')->only(['index']);
+        $this->middleware('can:create-products')->only(['create','store']);
+        $this->middleware('can:edit-products')->only(['edit' , 'update']);
+        $this->middleware('can:delete-products')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      *

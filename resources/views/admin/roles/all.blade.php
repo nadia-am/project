@@ -39,26 +39,26 @@
                             <th>آیدی نقش</th>
                             <th>نام نقش</th>
                             <th>برچسب نقش</th>
-                            <th>اقدامات</th>
+{{--                            <th>اقدامات</th>--}}
                         </tr>
                         @foreach($roles as $role)
                             <tr>
                                 <td>{{ $role->id }}</td>
                                 <td> {{ $role->name }} </td>
                                 <td> {{ $role->label }}</td>
-                                <td  class="d-flex">
-                                    @can('edit-roles')
-                                        <a href="{{ route('admin.roles.edit' , ['role'=>$role->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>
-                                    @endcan
+{{--                                <td  class="d-flex">--}}
+{{--                                    @can('edit-roles')--}}
+{{--                                        <a href="{{ route('admin.roles.edit' , ['role'=>$role->id]) }}" class="btn btn-sm btn-primary">ویرایش</a>--}}
+{{--                                    @endcan--}}
 
-                                    @can('delete-roles')
-                                        <form action="{{ route('admin.roles.destroy' , ['role'=>$role->id]) }}" method="post" >
-                                            @method('delete')
-                                            @csrf
-                                            <button class="btn btn-sm btn-danger mr-1">حذف</button>
-                                        </form>
-                                    @endcan
-                                </td>
+{{--                                    @can('delete-roles')--}}
+{{--                                        <form action="{{ route('admin.roles.destroy' , ['role'=>$role->id]) }}" method="post" >--}}
+{{--                                            @method('delete')--}}
+{{--                                            @csrf--}}
+{{--                                            <button class="btn btn-sm btn-danger mr-1">حذف</button>--}}
+{{--                                        </form>--}}
+{{--                                    @endcan--}}
+{{--                                </td>--}}
                             </tr>
                         @endforeach
 

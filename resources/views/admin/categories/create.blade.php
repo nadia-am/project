@@ -21,7 +21,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">نام </label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="نام کاربری را وارد کنید" value="{{ old('name') }}">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="نام دسته را وارد کنید" value="{{ old('name') }}">
                 </div>
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label" >والد </label>
