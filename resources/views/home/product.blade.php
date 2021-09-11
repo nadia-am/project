@@ -81,7 +81,7 @@
                             {!!  $product->description !!}
                         </p>
                         <h5 class="card-title">
-                            <del class="text-danger text-sm">{{ $product->price }}  تومان</del>
+                            <span class="text-danger text-sm">{{ $product->price }}  تومان</span>
                         </h5>
                         <p class="card-text">
                             تعداد موجودی
