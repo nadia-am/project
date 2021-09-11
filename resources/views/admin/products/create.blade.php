@@ -1,43 +1,36 @@
 <x-admin.content >
     <x-slot name="script">
         <script>
-            $(document).ready(function() {
-                $('.categories-list').select2({
-                    'placeholder' : 'دسته بندی را انتخاب کنید'
-                });
+            $('.categories-list').select2({
+                'placeholder' : 'دسته بندی را انتخاب کنید'
             });
-
             let changeAttributeValues = (event , id) => {
                 let valueBox = $(`select[name='attributes[${id}][value]']`);
-
                 $.ajaxSetup({
                     headers : {
                         'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content,
                         'Content-Type' : 'application/json'
                     }
                 })
-
+                //
                 $.ajax({
                     type : 'POST',
                     url : '/admin/attribute/values',
                     data : JSON.stringify({
                         name : event.target.value
                     }),
-                    success : function(data) {
+                    success : function(res) {
                         valueBox.html(`
-                            <option selected>انتخاب کنید</option>
+                            <option value="" selected>انتخاب کنید</option>
                             ${
-                            data.data.map(function (item) {
+                            res.data.map(function (item) {
                                 return `<option value="${item}">${item}</option>`
                             })
                         }
                         `);
-
-                        $('.attribute-select').select2({ tags : true });
                     }
                 });
             }
-
             let createNewAttr = ({ attributes , id }) => {
                 return `
                     <div class="row" id="attribute-${id}">
@@ -48,8 +41,8 @@
                                     <option value="">انتخاب کنید</option>
                                     ${
                                         attributes.map(function(item) {
-                        return `<option value="${item}">${item}</option>`
-                    })
+                                            return `<option value="${item}">${item}</option>`
+                                        })
                                     }
                                  </select>
                             </div>
@@ -68,17 +61,15 @@
                                 <button type="button" class="btn btn-sm btn-warning" onclick="document.getElementById('attribute-${id}').remove()">حذف</button>
                             </div>
                         </div>
-                    </div>
-                `
+                    </div>`
             }
-
             $('#add_product_attribute').click(function() {
                 let attributesSection = $('#attribute_section');
                 let id = attributesSection.children().length;
-
+                let attributes = $('#attributes').data('attributes');
                 attributesSection.append(
                     createNewAttr({
-                        attributes : [],
+                        attributes,
                         id
                     })
                 );
@@ -104,6 +95,7 @@
         <!-- /.card-header -->
         <!-- form start -->
         @include('admin.layouts.error')
+        <div id="attributes" data-attributes="{{ json_encode(\App\Models\Attribute::all()->pluck('name')) }}"></div>
         <form class="form-horizontal" method="post" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
@@ -145,9 +137,7 @@
                 </div>
                 <h6>ویژگی محصول</h6>
                 <hr>
-                <div id="attribute_section">
-
-                </div>
+                <div id="attribute_section"> </div>
                 <button class="btn btn-sm btn-danger" type="button" id="add_product_attribute">ویژگی جدید</button>
             </div>
             <!-- /.card-body -->

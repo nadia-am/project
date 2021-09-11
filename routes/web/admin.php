@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AttributeController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -21,6 +22,7 @@ Route::resource('roles', RoleController::class );
 Route::get('/user/{user}/permissions', [UserPermissionController::class , 'create'] )->name('users.permissions')->middleware('can:stafff-users-permission');
 Route::post('/user/{user}/permissions', [UserPermissionController::class , 'store'] )->name('users.permissions.store')->middleware('can:stafff-users-permission');
 Route::resource('products',ProductController::class)->except('show');
+Route::post('/attribute/values',[AttributeController::class,'getValue']);
 Route::resource('products.galleries',ProductGalleryController::class);
 Route::resource('comments',CommentController::class)->only(['index','destroy','update']);
 Route::resource('categories',CategoryController::class)->except('show');
@@ -29,3 +31,4 @@ Route::get('/payments/{order}',[OrderController::class ,'payments'])->name('orde
 
 Route::get('/user/{user}/normal',[UserController::class , 'normal'])->name('users.normal');
 Route::get('/user/{user}/staff',[UserController::class , 'staff'])->name('users.staff');
+

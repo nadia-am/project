@@ -54,11 +54,6 @@ class ProductController extends Controller
      */
     public function store(storProductRequest $request)
     {
-//        $file = $request->file('image');
-//        $image_name = $request->file('image')->getClientOriginalName();
-//        $image_path = '/images/'. now()->year . '/' . now()->month . '/' ;
-//        $file->move(public_path($image_path) , $image_name);
-
         $product = auth()->user()->products()->save(new Product([
             'title' => $request->title,
             'description' => $request->description,
@@ -67,17 +62,7 @@ class ProductController extends Controller
             'image'=> $request->image
         ]));
 
-        $attributes = collect($request['attributes']);
-        $attributes->each(function ($item) use($product){
-            if ( is_null($item['name']) || is_null($item['value']) ) return;
-            $attr = Attribute::firstOrCreate([
-                'name'=>$item['name']
-            ]);
-            $value = $attr->Values()->firstOrCreate([
-                'value'=>$item['value']
-            ]);
-            $product->attributes()->attach($attr->id , ['value_id'=>$value->id]);
-        });
+        $this->saveProduct_attributeAndValue($request, $product);
 
         $product->categories()->sync($request->categories);
         alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
@@ -112,21 +97,10 @@ class ProductController extends Controller
             'inventory' => $request->inventory ? $request->inventory : 0,
             'image' => $request->image,
         ]);
-//        if ($request->hasFile('image') ){
-//            /* get new uploaded file*/
-//            $file = $request->file('image');
-//            $image_name = $request->file('image')->getClientOriginalName();
-//            $image_path = '/images/'. now()->year . '/' . now()->month . '/' ;
-//            $mg = $image_path . $image_name;
-//            /* delete old uploaded image */
-//            if(File::exists(public_path($product->image))){
-//                File::delete(public_path($product->image));
-//            }
-//            /* upload new image */
-//            $file->move(public_path($image_path) , $image_name);
-//            $product->image = $image_path . $image_name;
-//            $product->save();
-//        }
+
+        $product->attributes()->detach();
+        $this->saveProduct_attributeAndValue($request, $product);
+
         $product->categories()->sync($request->categories);
         alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.products.index'));
@@ -143,5 +117,24 @@ class ProductController extends Controller
         $product->delete();
         alert()->success('حذف با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.products.index'));
+    }
+
+    /**
+     * @param updateProductRequest $request
+     * @param Product $product
+     */
+    protected function saveProduct_attributeAndValue(updateProductRequest $request, Product $product)
+    {
+        $attributes = collect($request);
+        $attributes->each(function ($item) use ($product) {
+            if (is_null($item['name']) || is_null($item['value'])) return;
+            $attr = Attribute::firstOrCreate([
+                'name' => $item['name']
+            ]);
+            $value = $attr->Values()->firstOrCreate([
+                'value' => $item['value']
+            ]);
+            $product->attributes()->attach($attr->id, ['value_id' => $value->id]);
+        });
     }
 }
