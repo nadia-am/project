@@ -4,7 +4,7 @@
         ویرایش اجازه دسترسی
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="/">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.permissions.index') }}">لیست اجازه دسترسی ها</a></li>
         <li class="breadcrumb-item active">ویرایش اجازه دسترسی  </li>
     </x-slot>

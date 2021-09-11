@@ -2,7 +2,7 @@
     <x-slot name="script"></x-slot>
     <x-slot name="title">ایجاد نقش جدید </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.') }}">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.roles.index') }}">لیست نقش </a></li>
         <li class="breadcrumb-item active">ایجاد نقش جدید</li>
     </x-slot>

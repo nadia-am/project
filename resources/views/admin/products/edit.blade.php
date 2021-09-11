@@ -83,7 +83,7 @@
         ویرایش محصول
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="/">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.products.index') }}">لیست محصولات</a></li>
         <li class="breadcrumb-item active">ویرایش محصول </li>
     </x-slot>

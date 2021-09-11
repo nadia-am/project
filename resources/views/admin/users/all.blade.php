@@ -4,7 +4,7 @@
         لیست کاربران
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.') }}">خانه</a></li>
         <li class="breadcrumb-item active">لیست کاربران</li>
     </x-slot>
 

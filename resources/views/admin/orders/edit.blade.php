@@ -4,7 +4,7 @@
         ویرایش سفارش
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="/">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.orders.index') }}">لیست سفارش </a></li>
         <li class="breadcrumb-item active">ویرایش سفارش  </li>
     </x-slot>

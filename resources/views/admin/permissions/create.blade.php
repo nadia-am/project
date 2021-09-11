@@ -2,7 +2,7 @@
     <x-slot name="script"></x-slot>
     <x-slot name="title">ایجاد دسترسی جدید </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="/">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.permissions.index') }}">لیست دسترسی </a></li>
         <li class="breadcrumb-item active">ایجاد دسترسی جدید</li>
     </x-slot>

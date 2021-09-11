@@ -1,6 +1,6 @@
 @component('admin.layouts.content',['title'=>'ایجاد دسترسی جدید'])
     @slot('breadcrums')
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.') }}">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.roles.index') }}">لیست کاربران </a></li>
         <li class="breadcrumb-item active">ایجاد دسترسی</li>
     @endslot

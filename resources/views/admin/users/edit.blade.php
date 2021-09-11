@@ -4,7 +4,7 @@
         ویرایش کاربر
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.') }}">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">لیست کاربران</a></li>
         <li class="breadcrumb-item active">ویرایش کاربر </li>
     </x-slot>

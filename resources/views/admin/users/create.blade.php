@@ -4,7 +4,7 @@
         ایجاد کاربر جدید
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.') }}">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">لیست کاربران</a></li>
         <li class="breadcrumb-item active">ایجاد کاربر جدید</li>
     </x-slot>

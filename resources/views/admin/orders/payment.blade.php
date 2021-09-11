@@ -4,8 +4,8 @@
         لیست پرداخت ها
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
-        <li class="breadcrumb-item ">لیست سفارشات </li>
+        <li class="breadcrumb-item"><a href="/">خانه</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.orders.index') }}">لیست سفارش </a></li>
         <li class="breadcrumb-item active">لیست پرداخت ها </li>
     </x-slot>
 

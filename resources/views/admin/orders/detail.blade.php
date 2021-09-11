@@ -4,8 +4,8 @@
         لیست سفارشات
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
-        <li class="breadcrumb-item ">لیست سفارشات </li>
+        <li class="breadcrumb-item"><a href="/">خانه</a></li>
+        <li class="breadcrumb-item "><a href="{{ route('admin.orders.index') }}">لیست سفارشات</a> </li>
         <li class="breadcrumb-item active">
             جزئیات سفارش
             {{ $order->id }}

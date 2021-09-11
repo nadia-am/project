@@ -2,7 +2,7 @@
     <x-slot name="script"></x-slot>
     <x-slot name="title">لیست دسترسی ها</x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="/">خانه</a></li>
         <li class="breadcrumb-item active">لیست دسترسی ها</li>
     </x-slot>
 

@@ -4,7 +4,7 @@
         لیست سفارشات
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="/">خانه</a></li>
         <li class="breadcrumb-item active">لیست سفارشات </li>
     </x-slot>
 

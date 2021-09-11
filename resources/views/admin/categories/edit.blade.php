@@ -4,7 +4,7 @@
         ویرایش دسته
     </x-slot>
     <x-slot name="breadcrums">
-        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+        <li class="breadcrumb-item"><a href="/">خانه</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.categories.index') }}">لیست دسته بندی ها</a></li>
         <li class="breadcrumb-item active">ویرایش دسته جدید</li>
     </x-slot>
