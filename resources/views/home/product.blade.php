@@ -43,7 +43,7 @@
     <div class="container">
         <div class="row ">
             <div class="col-md-12">
-                <div class="card text-center">
+                <div class="card ">
                     <div class="card-header d-flex justify-content-between">
                         {{ $product->title }}
                         @php
@@ -64,9 +64,21 @@
                         @endif
                     </div>
                     <div class="card-body">
+                        <div class="text-center">
+                            <img src="{{ $product->image }}" alt="{{ $product->title }}" width="400" class="img-fluid">
+                        </div>
+                        <div class="text-center galleries">
 
+                                @foreach($product->galleries as $img)
+                                    <span>
+                                        <img src="{{ $img->image }}" alt="{{ $img->alt }}" class="img-fluid" width="100">
+                                    </span>
+                                @endforeach
+
+
+                        </div>
                         <p class="card-text">
-                            {{ $product->description }}
+                            {!!  $product->description !!}
                         </p>
                         <h5 class="card-title">
                             <del class="text-danger text-sm">{{ $product->price }}  تومان</del>
