@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
 </head>
@@ -50,6 +54,7 @@
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="/plugins/jquery/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!-- Bootstrap -->
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 

@@ -28,7 +28,8 @@ class storProductRequest extends FormRequest
             'description'=>'required|min:5',
             'price'=>'required|numeric',
             'inventory'=>'numeric',
-            'image'=>'nullable|max:2024'
+            'image'=>'nullable|max:2024',
+            'attributes'=>'array'
         ];
     }
 }

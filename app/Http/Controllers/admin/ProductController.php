@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\storProductRequest;
 use App\Http\Requests\admin\updateProductRequest;
+use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -57,6 +58,7 @@ class ProductController extends Controller
 //        $image_name = $request->file('image')->getClientOriginalName();
 //        $image_path = '/images/'. now()->year . '/' . now()->month . '/' ;
 //        $file->move(public_path($image_path) , $image_name);
+
         $product = auth()->user()->products()->save(new Product([
             'title' => $request->title,
             'description' => $request->description,
@@ -64,6 +66,19 @@ class ProductController extends Controller
             'inventory' => $request->inventory ? $request->inventory : 0,
             'image'=> $request->image
         ]));
+
+        $attributes = collect($request['attributes']);
+        $attributes->each(function ($item) use($product){
+            if ( is_null($item['name']) || is_null($item['value']) ) return;
+            $attr = Attribute::firstOrCreate([
+                'name'=>$item['name']
+            ]);
+            $value = $attr->Values()->firstOrCreate([
+                'value'=>$item['value']
+            ]);
+            $product->attributes()->attach($attr->id , ['value_id'=>$value->id]);
+        });
+
         $product->categories()->sync($request->categories);
         alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.products.index'));
