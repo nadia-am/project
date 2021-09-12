@@ -20,28 +20,25 @@
                         جزئیات سفارش
                         {{ $order->id }}
                     </h3>
-
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover">
                     <tbody>
-                    <tr>
+                        <tr>
                         <th>آیدی محصول</th>
                         <th>نام کاربر</th>
                         <th>نام محصول</th>
                         <th>تعداد</th>
                     </tr>
-                    @foreach($products as $product)
-                        <tr>
-                            <td>{{ $product->id }}</td>
-                            <td>{{ $product->user->name }}</td>
-                            <td> {{ $product->title }} </td>
-                            <td> {{ $product->pivot->quantity }} </td>
-
-                        </tr>
-                    @endforeach
-
+                        @foreach($products as $product)
+                            <tr>
+                                <td>{{ $product->id }}</td>
+                                <td>{{ $product->user->name }}</td>
+                                <td> {{ $product->title }} </td>
+                                <td> {{ $product->pivot->quantity }} </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 </div>
@@ -53,4 +50,5 @@
             <!-- /.card -->
         </div>
     </div>
+
 </x-admin.content>
