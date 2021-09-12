@@ -9,13 +9,17 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Notifications\sendEmailInLogInNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-//Route::get('/', [IndexController::class , 'index']);
+//Route::get('/', function (){
+//    \auth()->loginUsingId(15);
+//    \auth()->user()->notify(new sendEmailInLogInNotification('123'));
+//});
 Route::get('/', [ProductController::class, 'index']);
-Auth::routes();//['verify'=>true]
+Auth::routes(['verify'=>true]);//
 Route::prefix('auth')->group(function (){
     Route::get('/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.redirect');
     Route::get('/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.callback');
@@ -24,7 +28,7 @@ Route::prefix('auth')->group(function (){
     Route::post('/token', [AuthenticateTokenController::class, 'postToken'])->name('post.2fa.token');
 });
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::middleware(['auth'])->prefix('profile')->group( function (){//,'verified'
+Route::middleware(['auth','verified'])->prefix('profile')->group( function (){//
     Route::get('/', [ProfileController::class, 'index'])->name('profile');
     Route::get('/twofactor', [ProfileController::class, 'manageTwoFactor'])->name('profile.2fa');
     Route::post('/twofactor', [ProfileController::class, 'manageTwoFactorPost'])->name('manage.profile.2fa');

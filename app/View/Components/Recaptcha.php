@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 
 class Recaptcha extends Component
 {
-    public $sitr_key;
+    public $site_key;
     public $type;
 
     /**
@@ -16,7 +16,7 @@ class Recaptcha extends Component
      */
     public function __construct($type)
     {
-        $this->sitr_key = env('RECAPTCHA_SITE_KEY');
+        $this->site_key = env('RECAPTCHA_SITE_KEY') ?? '6LfqHdkaAAAAADbECthx2AXQw7w1_1FAtdbs_nu2';
         $this->type = $type;
     }
 
