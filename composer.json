@@ -10,7 +10,7 @@
         "artesaos/seotools": "^0.20.1",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.54",
+        "laravel/framework": "^8.2.0",
         "laravel/sanctum": "^2.11",
         "laravel/scout": "^9.2",
         "laravel/socialite": "^5.2",
