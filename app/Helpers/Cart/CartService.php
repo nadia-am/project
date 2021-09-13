@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 use Modules\Discount\Entities\Discount;
 
-class CartSevice
+class CartService
 {
     protected $cart;
     private $name = "my-cart";
