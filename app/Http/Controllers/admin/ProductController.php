@@ -65,7 +65,6 @@ class ProductController extends Controller
                 'image'=> $request->image
             ]));
             $this->saveProduct_attributeAndValue($request, $product);
-
             $product->categories()->sync($request->categories);
             alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
             DB::commit();
@@ -142,7 +141,7 @@ class ProductController extends Controller
      */
     protected function saveProduct_attributeAndValue( $request, Product $product)
     {
-        $attributes = collect($request->attributes) ;
+        $attributes = collect($request['attributes']) ;
         $attributes->each(function ($item) use ($product) {
             if (is_null($item['name']) || is_null($item['value'])) return;
 

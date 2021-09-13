@@ -1,14 +1,5 @@
 <x-admin.content >
-    <x-slot name="script">
-        <script>
-            $('.permissions-list').select2({
-                'placeholder' : 'دسترسی ها مورد نظر را انتخاب کنید'
-            });
-            $('.roles-list').select2({
-                'placeholder' : 'نقش ها مورد نظر را انتخاب کنید'
-            });
-        </script>
-    </x-slot>
+    <x-slot name="script"></x-slot>
     <x-slot name="title">
         ایجاد دسترسی جدید
     </x-slot>
@@ -30,7 +21,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="permissions" class="col-sm-2 control-label">نقش ها</label>
-                    <select class="form-control roles-list" name="roles[]" id="" multiple>
+                    <select class="form-control" name="roles[]" id="" multiple>
                         @foreach(\App\Models\Role::all() as $role)
                             <option value="{{ $role->id }}" {{ in_array($role->id , $user->roles->pluck('id')->toArray())  ? 'selected' : ''}} >{{ $role->name }}</option>
                         @endforeach
@@ -38,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="permissions" class="col-sm-2 control-label">دسترسی ها</label>
-                    <select class="form-control permissions-list" name="permissions[]" id="" multiple>
+                    <select class="form-control" name="permissions[]" id="" multiple>
                         @foreach(\App\Models\Permission::all() as $permission)
                             <option value="{{ $permission->id }}"  {{ in_array($permission->id , $user->permissions->pluck('id')->toArray())  ? 'selected' : ''}} >{{ $permission->name }}</option>
                         @endforeach

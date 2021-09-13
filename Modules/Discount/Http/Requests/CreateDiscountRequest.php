@@ -4,7 +4,7 @@ namespace Modules\Discount\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class createDiscountRequest extends FormRequest
+class CreateDiscountRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

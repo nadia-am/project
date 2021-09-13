@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Discount\Entities\Discount;
-use Modules\Discount\Http\Requests\createDiscountRequest;
-use Modules\Discount\Http\Requests\updateDiscountRequest;
+use Modules\Discount\Http\Requests\CreateDiscountRequest;
+use Modules\Discount\Http\Requests\UpdateDiscountRequest;
 
 class DiscountController extends Controller
 {
@@ -53,7 +53,7 @@ class DiscountController extends Controller
      * @param Request $request
      * @return void
      */
-    public function store(createDiscountRequest $request)
+    public function store(CreateDiscountRequest $request)
     {
         $users =  json_encode($request->users);
         $discount = Discount::create([
@@ -84,7 +84,7 @@ class DiscountController extends Controller
      * @param Discount $discount
      * @return void
      */
-    public function update(updateDiscountRequest $request, Discount $discount)
+    public function update(UpdateDiscountRequest $request, Discount $discount)
     {
         $users =  json_encode($request->users);
         $discount->update([

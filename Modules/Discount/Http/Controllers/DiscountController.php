@@ -6,13 +6,13 @@ use App\Helpers\Cart\Cart;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Request;
 use Modules\Discount\Entities\Discount;
-use Modules\Discount\Http\Requests\checkDiscountRequest;
+use Modules\Discount\Http\Requests\CheckDiscountRequest;
 
 class DiscountController extends Controller
 {
 
 
-    public function check(checkDiscountRequest $request)
+    public function check(CheckDiscountRequest $request)
     {
         $discount = Discount::whereCode($request->code)->first();
         if (! auth()->check()){
