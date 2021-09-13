@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\createRoleRequest;
 use App\Http\Requests\admin\updateRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RoleController extends Controller
 {
@@ -52,11 +54,21 @@ class RoleController extends Controller
      */
     public function store(createRoleRequest $request)
     {
-        $role =  Role::create([
-            'name'=>$request->name,
-            'label'=>$request->label,
-        ]);
-        $role->permissions()->sync($request->permissions);
+        try {
+            DB::beginTransaction();
+            $role =  Role::create([
+                'name'=>$request->name,
+                'label'=>$request->label,
+            ]);
+            $role->permissions()->sync($request->permissions);
+            alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+            DB::commit();
+        }catch (\Exception $e){
+            DB::rollBack();
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
+
         return redirect(route('admin.roles.index'));
     }
 
@@ -80,12 +92,21 @@ class RoleController extends Controller
      */
     public function update(updateRoleRequest $request, Role $role)
     {
-        $role->update([
-            'name'=> $request->name,
-            'label'=> $request->label
-        ]);
-        $role->permissions()->sync($request->permissions);
-        alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        try {
+            DB::beginTransaction();
+            $role->update([
+                'name'=> $request->name,
+                'label'=> $request->label
+            ]);
+            $role->permissions()->sync($request->permissions);
+            alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+            DB::commit();
+        }catch (\Exception $e){
+            DB::rollBack();
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
+
         return redirect(route('admin.roles.index'));
     }
 

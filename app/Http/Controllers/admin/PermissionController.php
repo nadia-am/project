@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\createPermissionRequest;
 use App\Http\Requests\admin\updatePermissionRequest;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PermissionController extends Controller
 {
@@ -53,11 +55,17 @@ class PermissionController extends Controller
      */
     public function store(createPermissionRequest $request)
     {
-         Permission::create([
-            'name'=>$request->name,
-            'label'=>$request->label,
-        ]);
-        alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+        try {
+            Permission::create([
+                'name'=>$request->name,
+                'label'=>$request->label,
+            ]);
+            alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+        }catch (\Exception $e){
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
+
         return redirect(route('admin.permissions.index'));
     }
 
@@ -81,10 +89,15 @@ class PermissionController extends Controller
      */
     public function update(updatePermissionRequest $request, Permission $permission)
     {
-        $permission->name = $request->name;
-        $permission->label = $request->label;
-        $permission->save();
-        alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        try {
+            $permission->name = $request->name;
+            $permission->label = $request->label;
+            $permission->save();
+            alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        }catch (\Exception $e){
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
         return redirect(route('admin.permissions.index'));
     }
 

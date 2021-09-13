@@ -2,13 +2,13 @@
 
 use App\Http\Controllers\admin\AttributeController;
 use App\Http\Controllers\admin\CategoryController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\admin\OrderController;
+use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductGalleryController;
-use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\users\UserController;
-use App\Http\Controllers\Admin\users\UserPermissionController;
+use App\Http\Controllers\admin\users\UserPermissionController;
 use App\Http\Controllers\admin\CommentController;
 use Illuminate\Support\Facades\Route;
 
