@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\gallery;
+namespace App\Http\Requests\admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class editGalleryRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,12 @@ class editGalleryRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'=>'required',
-            'alt'=>'required',
+            'title'=>'required|max:255|min:3',
+            'description'=>'required|min:5',
+            'price'=>'required|numeric',
+            'inventory'=>'numeric',
+            'image'=>'nullable|max:2024',
+            'attributes'=>'array'
         ];
     }
 }

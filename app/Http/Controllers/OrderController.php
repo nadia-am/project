@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\profile\paymentOrderRequset;
-use App\Http\Requests\profile\showOrderRequset;
+use App\Http\Requests\profile\PaymentOrderRequset;
+use App\Http\Requests\profile\ShowOrderRequset;
 use App\Models\Order;
 use Illuminate\Support\Str;
 
@@ -15,13 +15,13 @@ class OrderController extends Controller
         return view('profile.orders',compact('orders'));
     }
 
-    public function single(showOrderRequset $requset, Order $order)
+    public function single(ShowOrderRequset $requset, Order $order)
     {
         return view('profile.order',compact('order'));
 
     }
 
-    public function payment(paymentOrderRequset $requset ,  Order $order)
+    public function payment(PaymentOrderRequset $requset , Order $order)
     {
         $res_num = Str::random();//send it to darga
         $order->payments()->create([

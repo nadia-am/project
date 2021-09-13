@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\createPermissionRequest;
-use App\Http\Requests\admin\updatePermissionRequest;
+use App\Http\Requests\admin\CreatePermissionRequest;
+use App\Http\Requests\admin\UpdatePermissionRequest;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,7 +53,7 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(createPermissionRequest $request)
+    public function store(CreatePermissionRequest $request)
     {
         try {
             Permission::create([
@@ -87,7 +87,7 @@ class PermissionController extends Controller
      * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function update(updatePermissionRequest $request, Permission $permission)
+    public function update(UpdatePermissionRequest $request, Permission $permission)
     {
         try {
             $permission->name = $request->name;

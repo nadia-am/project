@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\createRoleRequest;
-use App\Http\Requests\admin\updateRoleRequest;
+use App\Http\Requests\admin\CreateRoleRequest;
+use App\Http\Requests\admin\UpdateRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +52,7 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(createRoleRequest $request)
+    public function store(CreateRoleRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -90,7 +90,7 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(updateRoleRequest $request, Role $role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
         try {
             DB::beginTransaction();

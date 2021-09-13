@@ -3,8 +3,9 @@
 namespace App\Http\Requests\admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class updateOrderRequest extends FormRequest
+class UpdatePermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,8 @@ class updateOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'status'=> 'required',
-            'tracing_serial'=>'nullable'
+            'name'=> ['required','max:255', Rule::unique('permissions', 'name')->ignore($this->name,'name')] ,
+            'label'=>'required|max:255'
         ];
     }
 }

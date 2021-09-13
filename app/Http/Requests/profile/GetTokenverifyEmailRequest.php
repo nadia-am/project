@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\admin;
+namespace App\Http\Requests\profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class updateProductRequest extends FormRequest
+class GetTokenverifyEmailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,7 @@ class updateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|max:255|min:3',
-            'description'=>'required|min:5',
-            'price'=>'required|numeric',
-            'inventory'=>'numeric',
-            'image'=>'nullable|max:2024',
-            'attributes'=>'array'
+            'token'=>'required'
         ];
     }
 }

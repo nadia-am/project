@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\admin;
+namespace App\Http\Requests\gallery;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class updateRoleRequest extends FormRequest
+class EditGalleryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class updateRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|unique:permissions|max:255',
-            'label'=>'required|max:255',
-            'permissions'=>'required|array'
+            'image'=>'required',
+            'alt'=>'required',
         ];
     }
 }

@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\storProductRequest;
-use App\Http\Requests\admin\updateProductRequest;
+use App\Http\Requests\admin\StorProductRequest;
+use App\Http\Requests\admin\UpdateProductRequest;
 use App\Models\Attribute;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
+
 {
     public function __construct()
     {
@@ -52,19 +53,27 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(storProductRequest $request)
+    public function store(StorProductRequest $request)
     {
-        $product = auth()->user()->products()->save(new Product([
-            'title' => $request->title,
-            'description' => $request->description,
-            'price' => $request->price,
-            'inventory' => $request->inventory ? $request->inventory : 0,
-            'image'=> $request->image
-        ]));
-        $this->saveProduct_attributeAndValue($request, $product);
+        try {
+            DB::beginTransaction();
+            $product = auth()->user()->products()->save(new Product([
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price,
+                'inventory' => $request->inventory ? $request->inventory : 0,
+                'image'=> $request->image
+            ]));
+            $this->saveProduct_attributeAndValue($request, $product);
 
-        $product->categories()->sync($request->categories);
-        alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+            $product->categories()->sync($request->categories);
+            alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+            DB::commit();
+        }catch (\Exception $e){
+            DB::rollBack();
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
         return redirect(route('admin.products.index'));
 
     }
@@ -83,25 +92,34 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param updateProductRequest $request
+     * @param UpdateProductRequest $request
      * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(updateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $product->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'price' => $request->price,
-            'inventory' => $request->inventory ? $request->inventory : 0,
-            'image' => $request->image,
-        ]);
+        try {
+            DB::beginTransaction();
+            $product->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price,
+                'inventory' => $request->inventory ? $request->inventory : 0,
+                'image' => $request->image,
+            ]);
 
-        $product->attributes()->detach();
-        $this->saveProduct_attributeAndValue($request, $product);
+            $product->attributes()->detach();
+            $this->saveProduct_attributeAndValue($request, $product);
 
-        $product->categories()->sync($request->categories);
-        alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+            $product->categories()->sync($request->categories);
+            DB::commit();
+            alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        }catch (\Exception $e){
+            DB::rollBack();
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
+
         return redirect(route('admin.products.index'));
     }
 
@@ -119,7 +137,7 @@ class ProductController extends Controller
     }
 
     /**
-     * @param updateProductRequest $request
+     * @param UpdateProductRequest $request
      * @param Product $product
      */
     protected function saveProduct_attributeAndValue( $request, Product $product)

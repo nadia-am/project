@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\comment\SendCommentRequest;
-use App\Http\Requests\profile\getTokenverifyEmailRequest;
-use App\Http\Requests\profile\manageTwoFactorPostRequest;
+use App\Http\Requests\profile\GetTokenverifyEmailRequest;
+use App\Http\Requests\profile\ManageTwoFactorPostRequest;
 use App\Models\ActiveCode;
-use App\Models\Comment;
 use App\Notifications\sendEmailInLogInNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -23,7 +22,7 @@ class ProfileController extends Controller
         return view('profile.two-factor-auth');
     }
 
-    public function manageTwoFactorPost(manageTwoFactorPostRequest $request)
+    public function manageTwoFactorPost(ManageTwoFactorPostRequest $request)
     {
         if ($this->isRequestTypeSms($request)){
             if ($request->phone !== auth()->user()->phone_number){
@@ -50,7 +49,7 @@ class ProfileController extends Controller
         return view('profile.phone-verify');
     }
 
-    public function postPhoneVerify(getTokenverifyEmailRequest $request)
+    public function postPhoneVerify(GetTokenverifyEmailRequest $request)
     {
         if ( !$request->session()->has('phone') ) return redirect(route('profile.2fa'));
         $status = ActiveCode::verifyCode($request->token , $request->user() );
@@ -69,28 +68,28 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param manageTwoFactorPostRequest $request
+     * @param ManageTwoFactorPostRequest $request
      * @return bool
      */
-    public function isRequestTypeSms(manageTwoFactorPostRequest $request)
+    public function isRequestTypeSms(ManageTwoFactorPostRequest $request)
     {
         return $request->type == 'sms';
     }
 
     /**
-     * @param manageTwoFactorPostRequest $request
+     * @param ManageTwoFactorPostRequest $request
      * @return bool
      */
-    public function isRequestTypeOff(manageTwoFactorPostRequest $request)
+    public function isRequestTypeOff(ManageTwoFactorPostRequest $request)
     {
         return $request->type == 'off';
     }
 
     /**
-     * @param manageTwoFactorPostRequest $request
+     * @param ManageTwoFactorPostRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function createCodeAndSendSms(manageTwoFactorPostRequest $request)
+    public function createCodeAndSendSms(ManageTwoFactorPostRequest $request)
     {
         $code = ActiveCode::generateCode($request->user());
         $request->session()->flash('phone', $request->phone);

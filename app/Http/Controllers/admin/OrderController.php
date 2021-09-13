@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\updateOrderRequest;
+use App\Http\Requests\admin\UpdateOrderRequest;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 class OrderController extends Controller
@@ -61,13 +63,19 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(updateOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
-        $order->update([
-            'status'=>$request->status,
-            'tracing_serial'=>$request->tracing_serial
-        ]);
-        alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        try {
+            $order->update([
+                'status'=>$request->status,
+                'tracing_serial'=>$request->tracing_serial
+            ]);
+            alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        }catch (\Exception $e){
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
+
         return redirect(route('admin.orders.index',['type'=> $order->status]));
     }
 

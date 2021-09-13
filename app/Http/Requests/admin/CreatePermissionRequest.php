@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\profile;
+namespace App\Http\Requests\admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class getTokenverifyEmailRequest extends FormRequest
+class CreatePermissionRequest extends FormRequest
 {
     /**
+     *
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -24,7 +25,8 @@ class getTokenverifyEmailRequest extends FormRequest
     public function rules()
     {
         return [
-            'token'=>'required'
+            'name'=>'required|unique:permissions|max:255',
+            'label'=>'required|max:255'
         ];
     }
 }

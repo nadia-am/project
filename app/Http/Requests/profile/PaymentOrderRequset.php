@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\admin;
+namespace App\Http\Requests\profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
-class createRoleRequest extends FormRequest
+class PaymentOrderRequset extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class createRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('showOrder' , $this->order);
     }
 
     /**
@@ -24,9 +25,7 @@ class createRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|unique:permissions|max:255',
-            'label'=>'required|max:255',
-            'permissions'=>'required|array'
+            //
         ];
     }
 }

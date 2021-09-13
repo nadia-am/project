@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\gallery\createGalleryRequest;
-use App\Http\Requests\gallery\editGalleryRequest;
+use App\Http\Requests\gallery\CreateGalleryRequest;
+use App\Http\Requests\gallery\EditGalleryRequest;
 use App\Models\Product;
 use App\Models\ProductGallery;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class ProductGalleryController extends Controller
@@ -37,17 +39,26 @@ class ProductGalleryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param createGalleryRequest $request
+     * @param CreateGalleryRequest $request
      * @param Product $product
      * @return \Illuminate\Http\Response
      */
-    public function store(createGalleryRequest $request , Product $product)
+    public function store(CreateGalleryRequest $request , Product $product)
     {
-        $images_list =  collect($request->images);
-        $images_list->each(function ($image) use($product){
-            $product->galleries()->create($image);
-        });
-        alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+        try {
+            DB::beginTransaction();
+            $images_list =  collect($request->images);
+            $images_list->each(function ($image) use($product){
+                $product->galleries()->create($image);
+            });
+            DB::commit();
+            alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+        }catch (\Exception $e){
+            DB::rollBack();
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
+
         return redirect(route('admin.products.galleries.index' ,$product->id));
     }
 
@@ -77,19 +88,24 @@ class ProductGalleryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param editGalleryRequest $request
+     * @param EditGalleryRequest $request
      * @param Product $product
      * @param ProductGallery $image
      * @return \Illuminate\Http\Response
      */
-    public function update(editGalleryRequest  $request, Product $product  , ProductGallery $gallery)
+    public function update(EditGalleryRequest  $request, Product $product  , ProductGallery $gallery)
     {
-        $gallery->update([
-            'image'=>$request->image,
-            'alt'=>$request->alt
-        ]);
+        try {
+            $gallery->update([
+                'image'=>$request->image,
+                'alt'=>$request->alt
+            ]);
+            alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        }catch (\Exception $e){
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
 
-        alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.products.galleries.index' ,$product->id));
     }
 

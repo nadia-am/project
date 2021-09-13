@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\admin;
+namespace App\Http\Requests\profile;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
 
-class updatePermissionRequest extends FormRequest
+class ShowOrderRequset extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,8 @@ class updatePermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('showOrder' , $this->order);
+
     }
 
     /**
@@ -25,8 +26,7 @@ class updatePermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=> ['required','max:255', Rule::unique('permissions', 'name')->ignore($this->name,'name')] ,
-            'label'=>'required|max:255'
+            //
         ];
     }
 }
