@@ -1,5 +1,18 @@
 <x-admin.content >
-    <x-slot name="script"></x-slot>
+    <x-slot name="script">
+        <script>
+            $('.user-list').select2({
+                'placeholder' : 'کاربر مورد نظر را انتخاب کنید'
+            });
+            $('.product-list').select2({
+                'placeholder' : 'محصولات مورد نظر را انتخاب کنید'
+            });
+            $('.category-list').select2({
+                'placeholder' : 'دسته بندی مورد نظر را انتخاب کنید'
+            });
+
+        </script>
+    </x-slot>
     <x-slot name="title">
         ایجاد کد تخفیف جدید
     </x-slot>
@@ -29,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="users" class="col-sm-2 control-label">کاربر مورد نظر را انتخاب کنید (اختیاری) </label>
-                    <select name="users[]" class="form-control" id="users" multiple>
+                    <select name="users[]" class="form-control user-list" id="users" multiple>
                         @foreach(\App\Models\User::all() as $user)
                             <option value="{{ $user->id }}"  >
                                 {{ $user->name }}
@@ -39,7 +52,7 @@
                 </div>
                 <div class="form-group">
                     <label for="products" class="col-sm-2 control-label">مجصولات </label>
-                    <select name="products[]" class="form-control" id="products" multiple>
+                    <select name="products[]" class="form-control product-list" id="products" multiple>
                         @foreach(\App\Models\Product::all() as $product)
                             <option value="{{ $product->id }}"  >
                                 {{ $product->title }}
@@ -50,7 +63,7 @@
 
                 <div class="form-group">
                     <label for="categories" class="col-sm-2 control-label">دسته بندی </label>
-                    <select name="categories[]" class="form-control" id="categories" multiple>
+                    <select name="categories[]" class="form-control category-list" id="categories" multiple>
                         @foreach(\App\Models\Category::all() as $cat)
                             <option value="{{ $cat->id }}"  >
                                 {{ $cat->name }}
