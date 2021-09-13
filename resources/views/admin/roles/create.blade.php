@@ -1,5 +1,11 @@
 <x-admin.content >
-    <x-slot name="script"></x-slot>
+    <x-slot name="script">
+        <script>
+            $('.permission-list').select2({
+                'placeholder' : 'ذسترسی های مورد نظر را انتخاب کنید'
+            });
+        </script>
+    </x-slot>
     <x-slot name="title">ایجاد نقش جدید </x-slot>
     <x-slot name="breadcrums">
         <li class="breadcrumb-item"><a href="{{ route('admin.') }}">خانه</a></li>
@@ -27,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label for="permissions" class="col-sm-2 control-label">دسترسی ها</label>
-                    <select class="form-control" name="permissions[]" id="" multiple>
+                    <select class="form-control permission-list" name="permissions[]" id="" multiple>
                         @foreach(\App\Models\Permission::all() as $permission)
                             <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                         @endforeach
