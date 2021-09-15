@@ -25,11 +25,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::query();
-        if ($key = \request('search')){
-            $order = $order->where('id','like',"%{$key}%")->orWhere('tracing_serial','like',"%{$key}%");
-        }
-        $orders = $order->where('status','=',\request('type'))->latest()->paginate(20);
+//        $order = Order::query();
+//        if ($key = \request('search')){
+//            $order = $order->where('id','like',"%{$key}%")->orWhere('tracing_serial','like',"%{$key}%");
+//        }
+//        $orders = $order->where('status','=',\request('type'))->latest()->paginate(20);
+        $orders = Order::latest()->filter( \request('search') , \request('type'))->paginate(20);
         return view('admin.orders.all',compact('orders'));
     }
 

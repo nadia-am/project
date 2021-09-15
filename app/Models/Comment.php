@@ -27,6 +27,18 @@ class Comment extends Model
     }
     //endregion relation
 
+    //region scope
+    public function scopeFilter($query , $key)
+    {
+        if ($key){
+            $comments = $query->where('comment','like',"%{$key}%")
+                ->orWhereHas('user', function ($query) use ($key){
+                    $query->where('name', 'like',"%{$key}%");
+                });
+        }
+    }
+    //endregion scope
+
 
 
 

@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\admin\users;
+namespace App\Http\Controllers\Admin\users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\CreateAdminUserRequest;
 use App\Http\Requests\admin\UpdateAdminUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -25,24 +27,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::query();
-
-        if ($key = request('search')){
-            $users = $users->where('email','like', "%{$key}%")
-                ->orWhere('name','like', "%{$key}%")
-                ->orWhere('id','like', "%{$key}%");
-        }
-
-        if (Gate::allows('show-staff-user')){
-            if ($key = request('admin')){
-                $users = $users->where('is_superuser','=', 1)
-                    ->orWhere('is_staff','=', 1);
-            }
-        }else{
-            $users = $users->where('is_superuser','=', 0)
-                ->orWhere('is_staff','=', 0);
-        }
-        $users = $users->latest()->paginate(10);
+        $users = User::latest()->filter(request('search') , request('admin'))->paginate(10);
         return view('admin.users.all' , compact('users'));
     }
 
@@ -64,15 +49,24 @@ class UserController extends Controller
      */
     public function store(CreateAdminUserRequest $request)
     {
-        $user = User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>$request->password,
-        ]);
-        if ($request->has('confirm_email')){
-            $user->markEmailAsVerified();
+        try {
+            DB::beginTransaction();
+            $user = User::create([
+                'name'=>$request->name,
+                'email'=>$request->email,
+                'password'=>$request->password,
+            ]);
+            if ($request->has('confirm_email')){
+                $user->markEmailAsVerified();
+            }
+            alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+            DB::commit();
+        }catch (\Exception $e){
+            DB::rollBack();
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
         }
-        alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+
         return redirect(route('admin.users.index'));
     }
 
@@ -107,18 +101,25 @@ class UserController extends Controller
      */
     public function update(UpdateAdminUserRequest $request , User $user)
     {
-        $user->name = $request->name;
-        $user->email = $request->email;
-
-        if(!empty($request->password))
-        {
-            $user->password = $request->password;
+        try {
+            DB::beginTransaction();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            if(!empty($request->password))
+            {
+                $user->password = $request->password;
+            }
+            $user->save();
+            if ($request->has('confirm_email')){
+                $user->markEmailAsVerified();
+            }
+            alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+            DB::commit();
+        }catch (\Exception $e){
+            DB::rollBack();
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
         }
-        $user->save();
-        if ($request->has('confirm_email')){
-            $user->markEmailAsVerified();
-        }
-        alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
         return redirect(route('admin.users.index'));
     }
 
@@ -130,8 +131,16 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        alert()->success('حذف با موفقیت انجام گرفت', 'عملیات موفق');
+        try {
+            DB::beginTransaction();
+            $user->delete();
+            alert()->success('حذف با موفقیت انجام گرفت', 'عملیات موفق');
+            DB::commit();
+        }catch (\Exception $e){
+            DB::rollBack();
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
         return back();
     }
 

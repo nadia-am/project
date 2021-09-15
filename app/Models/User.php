@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Gate;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Discount\Entities\Discount;
 
@@ -126,4 +127,27 @@ class User extends Authenticatable implements MustVerifyEmail
         return !! $roles->intersect($this->roles)->count();
     }
     //endregion
+
+    //region Scope
+    public function scopeFilter($query, $key ,$userState)
+    {
+        if ($key){
+            $users = $query->where('email','like', "%{$key}%")
+                ->orWhere('name','like', "%{$key}%")
+                ->orWhere('id','like', "%{$key}%");
+        }
+
+        if (Gate::allows('show-staff-user')){
+            if ($userState){
+                $users = $users->where('is_superuser','=', 1)
+                    ->orWhere('is_staff','=', 1);
+            }
+        }else{
+            $users = $users->where('is_superuser','=', 0)
+                ->orWhere('is_staff','=', 0);
+        }
+    }
+    //endregion
+
+
 }

@@ -32,4 +32,12 @@ class Order extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function scopeFilter($query , $key , $type)
+    {
+        if ($key ){
+            $query->where('id','like',"%{$key}%")->orWhere('tracing_serial','like',"%{$key}%");
+        }
+         $query->where('status','=',$type);
+    }
 }

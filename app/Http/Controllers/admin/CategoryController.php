@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -45,11 +47,16 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        Category::create([
-            'name'=> $request->name,
-            'parent_id'=> $request->parent_id ?? 0,
-        ]);
-        alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+        try {
+            Category::create([
+                'name'=> $request->name,
+                'parent_id'=> $request->parent_id ?? 0,
+            ]);
+            alert()->success('افزودن با موفقیت انجام گرفت', 'عملیات موفق');
+        }catch (\Exception $e){
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
         return redirect(route('admin.categories.index'));
     }
 
@@ -74,11 +81,17 @@ class CategoryController extends Controller
      */
     public function update(CreateCategoryRequest $request, Category $category)
     {
-        $category->update([
-            'name'=> $request->name,
-            'parent_id'=> $request->parent_id ?? 0,
-        ]);
-        alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        try {
+            $category->update([
+                'name'=> $request->name,
+                'parent_id'=> $request->parent_id ?? 0,
+            ]);
+            alert()->success('ویرایش با موفقیت انجام گرفت', 'عملیات موفق');
+        }catch (\Exception $e){
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
+
         return redirect(route('admin.categories.index'));
     }
 

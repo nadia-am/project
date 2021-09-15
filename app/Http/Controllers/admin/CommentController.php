@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
@@ -22,14 +24,14 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::query();
-        if ($key = \request('search')){
-            $comments = $comments->where('comment','like',"%{$key}%")
-                            ->orWhereHas('user', function ($query) use ($key){
-                                $query->where('name', 'like',"%{$key}%");
-                            });
-        }
-        $comments = $comments->latest()->paginate(20);
+//        $comments = Comment::query();
+//        if ($key = \request('search')){
+//            $comments = $comments->where('comment','like',"%{$key}%")
+//                            ->orWhereHas('user', function ($query) use ($key){
+//                                $query->where('name', 'like',"%{$key}%");
+//                            });
+//        }
+        $comments = Comment::latest()->filter(\request('search'))->paginate(20);
         return view('admin.comments.all',compact('comments'));
     }
 
@@ -42,8 +44,13 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        $comment->update(['approved'=>1]);
-        alert()->success('دیدگاه تایید شد', 'عملیات موفق');
+        try {
+            $comment->update(['approved'=>1]);
+            alert()->success('دیدگاه تایید شد', 'عملیات موفق');
+        }catch (\Exception $e){
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
         return back();
     }
 
@@ -55,8 +62,13 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        $comment->delete();
-        alert()->success('دیدگاه حذف شد', 'عملیات موفق');
+        try {
+            alert()->success('دیدگاه حذف شد', 'عملیات موفق');
+        }catch (\Exception $e){
+            Log::error($e);
+            alert()->success('خطایی رخ داد، مجددا تلاش کنید', 'عملیات ناموفق');
+        }
+
         return back();
     }
 }
