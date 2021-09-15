@@ -19,7 +19,7 @@ class CreateAttributeValuesTable extends Migration
 
             $table->foreignId('attribute_id')
                 ->constrained('attributes')
-                ->onDelete('cascade');
+                ->cascadeOnDelete();
 
             $table->timestamps();
         });

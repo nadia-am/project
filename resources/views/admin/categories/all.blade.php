@@ -37,7 +37,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer d-flex">
-                    {{ $categories->appends(['search'=>request('search')])->render() }}
+                    {{ $categories->appends(['search'=>request('search')])->links() }}
                 </div>
             </div>
             <!-- /.card -->

@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('parent_id',0)->latest()->paginate(20);
+        $categories = Category::where('parent_id',0)->latest()->paginate();
         return view('admin.categories.all' , compact('categories'));
     }
 
