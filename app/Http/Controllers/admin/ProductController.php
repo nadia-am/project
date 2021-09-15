@@ -27,12 +27,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-//        $products = Product::query();
-//        if ($key = request('search')){
-//            $products = $products->where('title','like', "%{$key}%")
-//                ->orWhere('description','like', "%{$key}%")
-//                ->orWhere('id','like', "%{$key}%");
-//        }
         $products = Product::latest()->filter(request('search'))->paginate(10);
         return view('admin.products.all' , compact('products'));
     }

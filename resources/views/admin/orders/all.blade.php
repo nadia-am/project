@@ -15,9 +15,9 @@
                     <h3 class="card-title"> سفارشات </h3>
                     <div class="card-tools d-flex">
                         <form action="">
-                            <div class="input-group input-group-sm" style="width: 150px;">
+                            <div class="input-group input-group-sm" style="width: 300px;">
                                 <input type="hidden" name="type" class="form-control float-right" value="{{ \request('type') }}" >
-                                <input type="text" name="search" class="form-control float-right" placeholder="جستجو">
+                                <input type="text" name="search" class="form-control float-right" placeholder="جستجو بر اساس شماره پیگیری" value="{{ \request('search') }}" >
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
