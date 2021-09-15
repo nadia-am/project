@@ -21,4 +21,13 @@ class Permission extends Model
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function scopeFilter($query ,$key )
+    {
+        if ($key ){
+            $permissions = $query->where('name','like', "%{$key}%")
+                ->orWhere('label','like', "%{$key}%")
+                ->orWhere('id','like', "%{$key}%");
+        }
+    }
 }

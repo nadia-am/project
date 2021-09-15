@@ -27,13 +27,14 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::query();
-        if ($key = request('search')){
-            $permissions = $permissions->where('name','like', "%{$key}%")
-                ->orWhere('label','like', "%{$key}%")
-                ->orWhere('id','like', "%{$key}%");
-        }
-        $permissions = $permissions->latest()->paginate(20);
+//        $permissions = Permission::query();
+//        if ($key = request('search')){
+//            $permissions = $permissions->where('name','like', "%{$key}%")
+//                ->orWhere('label','like', "%{$key}%")
+//                ->orWhere('id','like', "%{$key}%");
+//        }
+//        $permissions = $permissions->latest()->paginate(20);
+        $permissions = Permission::latest()->filter(request('search'))->paginate(20);
         return view('admin.permissions.all' , compact('permissions'));
     }
 

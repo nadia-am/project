@@ -42,4 +42,12 @@ class Product extends Model
         return $this->belongsToMany(Attribute::class)->using(ProductAttributeValue::class)->withPivot('value_id');
     }
 
+    public function scopeFilter($query , $key)
+    {
+        if ($key){
+            $query->where('title','like', "%{$key}%")
+                ->orWhere('description','like', "%{$key}%")
+                ->orWhere('id','like', "%{$key}%");
+        }
+    }
 }
