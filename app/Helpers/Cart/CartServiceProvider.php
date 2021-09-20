@@ -5,6 +5,7 @@ namespace App\Helpers\Cart;
 
 
 use Carbon\Laravel\ServiceProvider;
+use http\Env\Request;
 
 class CartServiceProvider extends ServiceProvider
 {

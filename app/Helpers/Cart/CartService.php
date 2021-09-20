@@ -23,6 +23,7 @@ class CartService
             'discount'=>null,
         ]);
     }
+
     public function instance()
     {
         $cart = collect(json_decode(request()->cookie($this->name) , true));

@@ -13,13 +13,8 @@ use App\Notifications\sendEmailInLogInNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
-//Route::get('/', function (){
-//    \auth()->loginUsingId(15);
-//    \auth()->user()->notify(new sendEmailInLogInNotification('123'));
-//});
+Auth::routes(['verify'=>true]);
 Route::get('/', [ProductController::class, 'index']);
-Auth::routes(['verify'=>true]);//
 Route::prefix('auth')->group(function (){
     Route::get('/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.redirect');
     Route::get('/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.callback');
