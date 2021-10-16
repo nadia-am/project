@@ -10,6 +10,7 @@ class CartController extends Controller
 {
     public function add(Product $product)
     {
+        Cart::
         if (Cart::has($product)){
             $list = Cart::get($product);
             if ($product->inventory > $list['quantity']){
